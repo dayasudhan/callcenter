@@ -326,9 +326,9 @@ app.post('/login', function(req, res, next) {
 app.get('/executive', function (req, res) {
     res.render('executive_login', { user : req.user });
 });
-// app.get('/', function (req, res) {
-//     res.render('customer', { user : req.user });
-// });
+app.get('/', function (req, res) {
+    res.render('executive_login', { user : req.user });
+});
 //app.get('/find', function (req, res) {
 //    res.render('find', { user : req.user });
 //});
