@@ -2,6 +2,9 @@ var mongoose = require('mongoose');
 //Schema
 var CustomerInfoSchema = new mongoose.Schema({
 	id:String,
+	phone:Number,
+	name:String,
+	email: String,
 	addresses:[{label:String, 
 		addressLine1:String,
 		addressLine2:String,
@@ -11,11 +14,7 @@ var CustomerInfoSchema = new mongoose.Schema({
 		city:String, 
 		zip:String, 
 		latitude:Number,
-		longitude:Number }],
-	    phone:Number,
-	    name:String,
-	    email: String
-
+		longitude:Number }]
     });
 
 //Model

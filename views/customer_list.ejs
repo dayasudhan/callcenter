@@ -27,8 +27,8 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule">
-    <div class="wrapper"  ng-controller="adminController">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="executiveModule">
+    <div class="wrapper"  ng-controller="mainController">
 
       <header class="main-header" data-ng-init="getOrders()"  >
         <!-- Logo -->
@@ -137,11 +137,8 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">LABELS</li>
-            <li><a href="/p/admin_order_today"><i class="fa fa-circle-o text-red"></i> <span>Leads</span></a></li>
-             <li><a href="/p/student_details"><i class="fa fa-circle-o text-yellow"></i> <span>Pending</span></a></li>
-            <li><a href="/p/student_attendence"><i class="fa fa-circle-o text-aqua"></i> <span>Executive Sent</span></a></li>
-            <li><a href="/p/manager_executive"><i class="fa fa-circle-o text-aqua"></i> <span>Add New CSR</span></a></li>
-            <li><a href="/p/CSR_list"><i class="fa fa-circle-o text-aqua"></i> <span>CSR List</span></a></li>
+            <li><a href="/p/customer_details"><i class="fa fa-circle-o text-red"></i> <span>Customer Detail</span></a></li>
+            <li><a href="/p/customer_list"><i class="fa fa-circle-o text-aqua"></i> <span>Customer List</span></a></li>
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -214,10 +211,10 @@
                           </form> -->
                           <form name="myForm">
                            
-                            <select name="repeatSelect" id="repeatSelect" ng-model="data.changestatususerid">
+                            <!-- <select name="repeatSelect" id="repeatSelect" ng-model="data.changestatususerid">
                               <option ng-repeat="option in executivelist" value="{{option.userid}}">{{option.userid}}</option>
-                            </select>
-                            <button type="submit" ng-click= "changestatus(data,order.id)">Submit</button>
+                            </select> -->
+                             <button type="submit"  ng-click= "changestatus(order.id)">Open</button>
                           </form>
                       </td>
                        </tr>
@@ -441,7 +438,7 @@
     <script src="/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/dist/js/demo.js"></script>
-     <script src="/javascripts/admin.js"></script>
+     <script src="/javascripts/executive.js"></script>
     <!-- page script -->
     <script>
       $(function () {

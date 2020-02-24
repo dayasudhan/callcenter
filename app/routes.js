@@ -1,6 +1,6 @@
 var CustomerInfoModel = require('../app/models/customerInfo');
-var StudentModel = require('../app/models/studentinfo');
-var SchoolModel = require('../app/models/schoolnfo');
+var ExecutiveInfoModel = require('../app/models/executiveInfo');
+var GrahakModel = require('../app/models/grahak');
 var CountersModel = require('../app/models/counters');
 var OtpModel = require('../app/models/otp');
 var Firebase = require("firebase");
@@ -141,6 +141,7 @@ app.post('/login', function(req, res, next) {
          console.log("error in login 0");
         return next(err); }
     if (!user) {
+        console.log("error in !user");
          var redirect_url = '/';
             if(req.body.role == 'customer')
             {
@@ -152,12 +153,28 @@ app.post('/login', function(req, res, next) {
             {
                 redirect_url = '/p/vendor_signup';
                 return res.redirect(redirect_url); 
-            } 
+            }
+            else if(req.body.role == 'manager')
+            {
+                redirect_url = '/p/manager_executive';
+                return res.redirect(redirect_url);
+            }
+            else if(req.body.role == 'executive')
+            {
+               
+                return res.send("Error in Login , user not registered");
+            }
+            else if(req.body.role == 'CSR')
+            {
+               
+                return res.send("Error in Login , user not registered");
+            }
             
     }
     req.logIn(user, function(err) {
       if (err) { return next(err); }
       console.log(req.body.role);
+      console.log("login");
       var redirect_url = '/';
       if(req.body.role == 'customer')
       {
@@ -165,20 +182,30 @@ app.post('/login', function(req, res, next) {
 
            console.log("success in login 1");
 
-        return CustomerInfoModel.find({ 'phone':req.body.email},function( err, customerInfo ) {
-            if( !err ) {
-                return res.send( customerInfo );
-            } else {
-                console.log( err );
-                return res.send('ERROR');
-            }
-        });
+        // return CustomerInfoModel.find({ 'phone':req.body.email},function( err, customerInfo ) {
+        //     if( !err ) {
+        //         return res.send( customerInfo );
+        //     } else {
+        //         console.log( err );
+        //         return res.send('ERROR');
+        //     }
+        // });
  
         return res.send("1"); 
       }
        else if(req.body.role == 'vendor') 
        {
         redirect_url = '/p/customer_details';
+         return res.redirect(redirect_url);
+       }
+       else if(req.body.role == 'manager')
+       {
+        redirect_url = '/p/manager_executive';
+        return res.redirect(redirect_url);
+       }
+       else if(req.body.role == 'CSR')
+       {
+         redirect_url = '/p/customer_details';
          return res.redirect(redirect_url);
        }
      
@@ -338,9 +365,17 @@ app.get('/', function (req, res) {
 app.get('/p/executive_login', function (req, res) {
     res.render('executive_login', { user : req.user });
 });
-
+app.get('/p/manager_executive', function (req, res) {
+    res.render('manager_executive', { user : req.user });
+});
+app.get('/p/CSR_list', function (req, res) {
+    res.render('CSR_list', { user : req.user });
+});
 app.get('/p/executive_signup', function(req, res) {
     res.render('executive_signup', { });
+});
+app.get('/p/executive_details', function(req, res) {
+    res.render('executive_details', { user : req.user });
 });
 
 app.get('/about_us', function (req, res) {
@@ -359,10 +394,20 @@ app.get('/p/admin_order_today', function (req, res) {
     console.log(req.user);
     res.render('admin_order_today', { user : req.user });
 });
-app.get('/p/customer_details', function (req, res) {
+// app.get('/p/customer_details', function (req, res) {
+//     console.log(req.user);
+//     res.render('customer_details', { user : req.user });
+// });
+app.get('/p/customer_details/:id', function (req, res) {
     console.log(req.user);
-    res.render('customer_details', { user : req.user });
+    console.log(req.params.id);
+    res.render('customer_details', { user : req.user,id:req.params.id });
 });
+app.get('/p/customer_list', function (req, res) {
+    console.log(req.user);
+    res.render('customer_list', { user : req.user });
+});
+
 app.get('/p/student_details', function (req, res) {
     res.render('student_details', { user : req.user });
 });
@@ -426,22 +471,26 @@ console.log(req.body);
 
 app.post('/signup', function(req, res, next) {
 console.log(req.body);
+//console.log(user);
   if(req.body.password != req.body.password2)
   {
      
   console.log("password mimatchmatch");
-     return res.send('ERROR');
+     return res.send('password mimatchmatch');
   }
   else
   {
     console.log("password match");
   }
-  console.log('/signup');
+  console.log('/signup 2');
     passport.authenticate('local-signup', function(err, user, info) {
      console.log(req.body);
+     console.log('/signup 3');
       if (err) { 
+        console.log('/signup 4' );
         return next(err); }
       if (!user) { 
+        console.log('/signup 5' );
           var redirect_url = '/';
               if(req.body.role == 'customer')
               {
@@ -452,9 +501,15 @@ console.log(req.body);
               {
                   redirect_url = '/p/vendor_signup';
               } 
+              if(req.body.role == 'CSR')
+              {
+                //  redirect_url = '/p/executive_signup';
+                  return res.send("Error In registering the CSR");
+              }
               return res.redirect(redirect_url); 
        }
       req.logIn(user, function(err) {
+        console.log('/signup 6' );
         if (err) { return next(err); }
         console.log(req.body.role);
         var redirect_url;
@@ -472,6 +527,18 @@ console.log(req.body);
           redirect_url = '/p/customer_details';
           registerVendor(req, res, next);
           return res.redirect(redirect_url);
+        }
+        else if(req.body.role == 'executive') 
+        {
+          redirect_url = '/p/executive_details';
+         // registerExecutive(req, res, next);
+          return res.redirect(redirect_url);
+        }
+        else if(req.body.role == 'CSR') 
+        {
+          //redirect_url = '/p/executive_details';
+          registerExecutive(req, res, next);
+          //return res.redirect(redirect_url);
         }
         else
         {
@@ -515,6 +582,60 @@ function registerCustomer(req, res, next) {
         });
     });
 };
+app.get( '/v1/executive/infoall', function( request, response ) {
+    console.log("/v1/executive/infoall");
+  	if(checkVendorApiAunthaticated(request,0) == false)
+	{
+		return response.send("Not aunthiticated").status(403);
+	}
+    return ExecutiveInfoModel.find(function( err, order ) {
+        if( !err ) {
+            console.log("no error");
+            return response.send( order );
+        } else {
+            console.log("error");
+            console.log( err );
+            return response.send('ERROR');
+        }
+    });
+});
+function registerExecutive(req, res, next) {
+    console.log("/registerExecutive");
+    var cus_id = "E";
+    var res = getNextSequence('executive',function(data) {
+  
+      cus_id = cus_id + data.sequence;
+      console.log(cus_id);
+        var customerInfo = new ExecutiveInfoModel({
+          email:req.body.userid,
+          id:cus_id,
+          phone:req.body.phone,
+          name:req.body.name,
+          userid:req.body.email
+        });
+  
+        customerInfo.save( function( err ) {
+          if( !err ) {
+                console.log( 'registerExecutive created' );
+                console.log(req.body.email);
+                    req.session.save(function (err) {
+                      if (err) {
+                          console.log( 'registerExecutive save error' );
+                         next(err);
+                      }
+                      console.log( 'registerExecutive save complete' );
+                    });
+                    console.log( '463' );
+                 next("Success");
+                //return res.send('Success');
+                } else {
+                  console.log( 'registerExecutive error' );
+                  console.log( err );
+                  return res.send('ERROR');
+                }
+          });
+      });
+  };
 app.get( '/v1/test/customer', function( req, res ) {
                 req.body.email = "dayasudhankggg@gmail.com";
                 req.body.phoneNumber = "9987";
@@ -725,13 +846,13 @@ function isLoggedIn(req, res, next) {
 
     res.redirect('/');
 }
-app.get( '/v1/school/info/:id', function( request, response ) {
+app.get( '/v1/grahak/info/:id', function( request, response ) {
     console.log("GET --/v1/school/info/");
    	// if(checkVendorApiAunthaticated(request,1) == false && request.isAuthenticated() == false)
 	// {
 	// 	return response.send("Not aunthiticated").status(403);
 	// }
-    return SchoolModel.find({ 'username':request.params.id},function( err, vendor ) {
+    return GrahakModel.find({ 'username':request.params.id},function( err, vendor ) {
         if( !err ) {
             console.log(vendor);
             return response.send( vendor );
@@ -741,14 +862,29 @@ app.get( '/v1/school/info/:id', function( request, response ) {
         }
     });
 });
-    
-app.get( '/v1/school/infoall', function( request, response ) {
+app.get( '/v1/grahak/infobyid/:id', function( request, response ) {
+    console.log("GET --/v1/school/info/");
+   	// if(checkVendorApiAunthaticated(request,1) == false && request.isAuthenticated() == false)
+	// {
+	// 	return response.send("Not aunthiticated").status(403);
+	// }
+    return GrahakModel.find({ 'id':request.params.id},function( err, vendor ) {
+        if( !err ) {
+            console.log(vendor);
+            return response.send( vendor );
+        } else {
+            console.log( err );
+            return response.send('ERROR');
+        }
+    });
+});
+app.get( '/v1/grahak/infoall', function( request, response ) {
     console.log("GET --/v1/school/info/all");
    	// if(checkVendorApiAunthaticated(request,1) == false && request.isAuthenticated() == false)
 	// {
 	// 	return response.send("Not aunthiticated").status(403);
 	// }
-    return SchoolModel.find(function( err, vendor ) {
+    return GrahakModel.find(function( err, vendor ) {
         if( !err ) {
             console.log(vendor);
             return response.send( vendor );
@@ -758,83 +894,96 @@ app.get( '/v1/school/infoall', function( request, response ) {
         }
     });
 });
-
-app.post( '/v1/school/info/:id', function( req, res ) {
+app.post( '/v1/grahak/changestatus/:id', function( req, res ) {
     // if(checkVendorApiAunthaticated(req,1) == false && req.isAuthenticated() == false)
     // {
     //     return res.send("Not aunthiticated").status(403);
     // }
-      console.log("storeSchoolInfo post");
-      console.log(req.body);
-      storeSchoolInfo(req,res,function(req,res){
-               console.log("storeSchoolInfo success");
-               
-            });
-    
+    var indiantime = new Date();
+    // indiantime.setHours(indiantime.getHours() + 5);
+    // indiantime.setMinutes(indiantime.getMinutes() + 30);
+    return GrahakModel.findOneAndUpdate({ 'id':request.params.id},
+    { 
+        status:request.body.status,
+        $addToSet: {tracker: {$each:[{status: request.body.status,  time:indiantime,reason:request.body.reason}] }}
+      },
+        function( err, order ) {
+      if( !err ) {
+          console.log("no error");
+          
+          return response.send("success");
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
       });
-    
-
-function storeSchoolInfo(request,response,callback,params)
-{
-console.log("storeSchoolInfo");
-console.log(request.params.id);
-console.log(request.body);
-SchoolModel.update({ 'username':request.params.id},
-    {
-        phone:request.body.phone ,
-        name:request.body.name ,
-        email:request.body.email
-        },
-        function( err ) {
-        if( !err ) {
-            console.log( 'storeSchoolInfo created' );
-            callback(request,response);
-            return ;
-        } else {
-        console.log( 'storeVendorInfo error' );
-            console.log( err );
-            return response.send('ERROR');
-        }
-    });
-}
-app.post( '/v1/student/info/:id', function( req, res ) {
+app.post( '/v1/grahak/info/:id', function( req, res ) {
     // if(checkVendorApiAunthaticated(req,1) == false && req.isAuthenticated() == false)
     // {
     //     return res.send("Not aunthiticated").status(403);
     // }
-      console.log("storestudentInfo post");
+      console.log("storegrahakInfo post");
       console.log(req.body);
-      storeStudentInfo(req,res,function(req,res){
-               console.log("storestudentInfo success");
+      storegrahakInfo(req,res,function(req,res){
+               console.log("storegrahakInfo success");
                
             });
     
       });
-function storeStudentInfo(request,response,callback,params)
+      app.post( '/v1/executive/info/', function( req, res ) {
+        // if(checkVendorApiAunthaticated(req,1) == false && req.isAuthenticated() == false)
+        // {
+        //     return res.send("Not aunthiticated").status(403);
+        // }
+          console.log("storeexecutiveInfo post");
+          console.log(req.body);
+          registerExecutive(req,res,function(req,res){
+                   console.log("storeexecutiveInfo success");
+                   
+                });
+        
+          });
+
+function storegrahakInfo(request,response,callback,params)
 {
-console.log("storeStudentInfo");
+console.log("GrahakModel");
 console.log(request.params.id);
 console.log(request.body);
-SchoolModel.update({ 'username':request.params.id},
-    {
-        studentInfo:{
-        phone:request.body.phone ,
-        name:request.body.name ,
-        email:request.body.email
-        }
-    },
-        function( err ) {
-        if( !err ) {
-            console.log( 'storeStudentInfo created' );
-            callback(request,response);
-            return ;
-        } else {
-        console.log( 'storeVendorInfo error' );
+var indiantime = new Date();
+// indiantime.setHours(indiantime.getHours() + 5);
+// indiantime.setMinutes(indiantime.getMinutes() + 30);
+var taskid = "T";
+var res = getNextSequence('task',function(data) {
+    taskid = taskid + data.sequence;
+var grahakInfo = new GrahakModel({
+    phone:request.body.phone ,
+    name:request.body.name ,
+    assigneduser:"Manager",
+    id:taskid,
+    status:"New",
+    tracker:  [{status:"New",time:indiantime,reason:""}]  
+  });
+  grahakInfo.save( function( err ) {
+    if( !err ) {
+          console.log( 'grahakInfo created' );
+          request.session.save(function (err) {
+                if (err) {
+                    console.log( 'grahakInfo save error' );
+                  return next(err);
+                }
+                console.log( 'grahakInfo save complete' );
+              });
+          return ;
+          } else {
+            console.log( 'grahakInfo error' );
             console.log( err );
             return response.send('ERROR');
-        }
+          }
     });
+});
 }
+
 function registerVendor(req, res, next) {
     console.log("/registerVendor");
     console.log(req.body.email);

@@ -48,7 +48,11 @@ module.exports = function(passport) {
             User.findOne({ 'local.email' :  email }, function(err, user) {
                 // if there are any errors, return the error
                 if (err)
+                {
+                    req.flash(err);
+                    console.log(err);
                     return done(err);
+                }
 
                 // if no user is found, return the message
                 if (!user)
@@ -121,23 +125,32 @@ module.exports = function(passport) {
         console.log(email);
         console.log(password);
         console.log(req.body);
+        console.log(req.user);
         if (email)
             email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
 
         // asynchronous
         process.nextTick(function() {
             // if the user is not already logged in:
-            if (!req.user) {
+            console.log("err1");
+            if (!req.user || req.body.role == "CSR") {
+                console.log("err12");
                 User.findOne({ 'local.email' :  email }, function(err, user) {
+                    console.log(user);
                     // if there are any errors, return the error
                     if (err)
+                    {
+                        console.log("err2");
+                        console.log(err);
                         return done(err);
+                    }
 
                     // check to see if theres already a user with that email
                     if (user) {
+                        console.log("err3");
                         return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
                     } else {
-
+                        console.log("err4");
                         // create the user
                         var newUser            = new User();
 
@@ -157,16 +170,21 @@ module.exports = function(passport) {
             // if the user is logged in but has no local account...
             } else if ( !req.user.local.email ) {
                 // ...presumably they're trying to connect a local account
-
+                console.log("err5");
                 // BUT let's check if the email used to connect a local account is being used by another user
                 User.findOne({ 'local.email' :  email }, function(err, user) {
                     if (err)
+                    {
+                        console.log("err6");
                         return done(err);
+                    }
                     
                     if (user) {
+                        console.log("err7");
                         return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
                         // Using 'loginMessage instead of signupMessage because it's used by /connect/local'
                     } else {
+                        console.log("err8");
                         var user = req.user;
                         user.local.email = email;
                         user.local.password = user.generateHash(password);
@@ -179,6 +197,7 @@ module.exports = function(passport) {
                     }
                 });
             } else {
+                console.log("err9");
                 // user is logged in and already has a local account. Ignore signup. (You should log out before trying to create a new account, user!)
                 return done(null, req.user);
             }
