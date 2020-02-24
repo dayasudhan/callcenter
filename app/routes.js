@@ -42,7 +42,7 @@ var client_key_web = 'pickcock';
 
 
 
-var rootRef = Firebase.database().ref();
+//var rootRef = Firebase.database().ref();
 
 
 module.exports = function(app, passport) {
@@ -918,19 +918,58 @@ app.post( '/v1/grahak/changestatus/:id', function( req, res ) {
       }
   });
       });
-app.post( '/v1/grahak/info/:id', function( req, res ) {
-    // if(checkVendorApiAunthaticated(req,1) == false && req.isAuthenticated() == false)
-    // {
-    //     return res.send("Not aunthiticated").status(403);
-    // }
+app.post( '/v1/grahak/info2/:id', function( request, response ) {
+
       console.log("storegrahakInfo post");
-      console.log(req.body);
-      storegrahakInfo(req,res,function(req,res){
-               console.log("storegrahakInfo success");
-               
-            });
+      console.log(request.body);
+      var address = {label:request.body.addresslabel, 
+      addressline:request.body.address,
+      landMark:request.body.landmark};
+      console.log(address);
+      return GrahakModel.findOneAndUpdate({ 'id':request.body.id},
+      { 
+          personalemail:request.body.personalemail,
+          dob:request.body.dob,
+          salary:request.body.salary,
+          //status:String,
+          //assigneduser:String,
+        //   tracker:[{status: String,time:Date,reason:String}],
+          addresses:address,
+          officeemail:request.body.officeemail,
+          companyname:request.body.companyname,
+          companycategory:request.body.category,
+          alternatephone:request.body.alternatephone,
+          doctocollect:request.body.doctocollect,
+          otherrequirements:request.body.otherrequirements,
+          customerstatus:request.body.customerstatus,
+
+        //  $addToSet: {tracker: {$each:[{status: request.body.status,  time:indiantime,reason:request.body.reason}] }}
+        },
+          function( err, order ) {
+        if( !err ) {
+            console.log("no error");
+            console.log(order);
+            return response.send("success");
+        } else {
+            console.log( err );
+            return response.send('ERROR');
+        }
     
       });
+    });
+app.post( '/v1/grahak/info/:id', function( req, res ) {
+// if(checkVendorApiAunthaticated(req,1) == false && req.isAuthenticated() == false)
+// {
+//     return res.send("Not aunthiticated").status(403);
+// }
+    console.log("storegrahakInfo post");
+    console.log(req.body);
+    storegrahakInfo(req,res,function(req,res){
+            console.log("storegrahakInfo success");
+            
+        });
+
+    });
       app.post( '/v1/executive/info/', function( req, res ) {
         // if(checkVendorApiAunthaticated(req,1) == false && req.isAuthenticated() == false)
         // {
@@ -962,7 +1001,7 @@ var grahakInfo = new GrahakModel({
     assigneduser:"Manager",
     id:taskid,
     status:"New",
-    tracker:  [{status:"New",time:indiantime,reason:""}]  
+    tracker:  [{status:"New",time:indiantime,reason:""}]  ,
   });
   grahakInfo.save( function( err ) {
     if( !err ) {
