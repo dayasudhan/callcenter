@@ -9,7 +9,7 @@ var GrahakInfoSchema = new mongoose.Schema({
 	salary:Number,
 	status:String,
 	assigneduser:String,
-	tracker:[{status: String,time:Date,reason:String}],
+	tracker:[{status: String,time:String,reason:String,changedbyuserid:String}],
 	addresses:[{label:String, 
 		addressline:String,
 		landMark:String

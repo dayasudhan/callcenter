@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Data Tables</title>
+    <title>Cinfo</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -30,13 +30,13 @@
   <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule">
     <div class="wrapper"  ng-controller="adminController">
 
-      <header class="main-header" data-ng-init="getOrders()"  >
+      <header class="main-header" data-ng-init="getOrdersById('<%= id %>')"  >
         <!-- Logo -->
         <a href="../../index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b>LT</span>
+          <span class="logo-mini"><b>Cinfo</b>LT</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b>LTE</span>
+          <span class="logo-lg"><b>Cinfo</b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -137,10 +137,10 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">LABELS</li>
-            <li><a href="/p/admin_order"><i class="fa fa-circle-o text-red"></i> <span>Order List</span></a></li>
-            <!--li><a href="/p/admin_hotel"><i class="fa fa-circle-o text-yellow"></i> <span>Hotel List</span></a></li>
-            <li><a href="/p/admin_sustomer"><i class="fa fa-circle-o text-aqua"></i> <span>Customer</span></a></li-->
-
+            <li><a href="/p/admin_order_today"><i class="fa fa-circle-o text-red"></i> <span>Leads</span></a></li>
+            <li><a href="/p/load_xl"><i class="fa fa-circle-o text-yellow"></i> <span>Load Excel</span></a></li>
+               <li><a href="/p/manager_executive"><i class="fa fa-circle-o text-aqua"></i> <span>Add New CSR</span></a></li>
+            <li><a href="/p/CSR_list"><i class="fa fa-circle-o text-aqua"></i> <span>CSR List</span></a></li>
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -148,102 +148,192 @@
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
+ 
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Data Tables
-            <small>advanced tables</small>
+            Customer Information
+           
           </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Tables</a></li>
-            <li class="active">Data tables</li>
-          </ol>
+         
         </section>
 
         <!-- Main content -->
         <section class="content">
           <div class="row">
+
+              <div class="col-xs-12">
+<!-- Horizontal Form -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" >
+                  <div class="box-body">
+                     <div class="form-group">
+                      <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Lead ID</label>
+                      <div class="col-sm-10">
+                        <label  class="col-sm-2 control-sidebar-subheading">{{order.id}}</label>
+                      </div>
+                        </div>
+                    <div class="form-group">
+                      <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Status</label>
+                      <div class="col-sm-10">
+                        <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.status}}</label>
+                      </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Assigned CSR</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.assigneduser}}</label>
+                          </div>
+                            </div>
+
+                        <div class="form-group">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Name</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.name}}</label>
+                          </div>
+                            </div>
+                        <div class="form-group">
+                         <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Phone no</label>
+                         <div class="col-sm-10">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.phone}}</label>
+                         </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Customer Status</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.customerstatus}}</label>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Alternate Phone No</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.alternatephone}}</label>          </div>
+                         </div>
+                        <div class="form-group">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Date Of Birth</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.dob}}</label>     </div>
+                         </div>
+                         <div class="form-group">
+                          <label for="inputEmail3" name="latitude"  class="col-sm-2 control-sidebar-subheading">Salary</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.salary}}</label>     </div>
+                        </div>
+                        <div class="form-group">
+                         <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Company Name</label>
+                         <div class="col-sm-10">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.companyname}}</label>     </div>
+                        </div>
+                       
+                        <div class="form-group">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Category</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.companycategory}}</label>      </div>
+                        </div>
+                    
+                         <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-sidebar-subheading">Address</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.addresses[0].addressline}}</label>      </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputEmail3"name="Landmark" class="col-sm-2 control-sidebar-subheading">Address Type</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.addresses[0].label}}}</label>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputEmail3"name="Landmark" class="col-sm-2 control-sidebar-subheading">Landmark</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.addresses[0].landMark}}</label>     </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Official Email Id</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.officeemail}}</label>  </div>
+                         </div>
+                         <div class="form-group">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Personal Email Id</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.personalemail}}</label>   </div>
+                         </div>
+                         <div class="form-group">
+                          <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Documents to collect</label>
+                          <div class="col-sm-10">
+                            <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.doctocollect}}</label>
+                          </div>
+                        </div>
+                    <div class="form-group">
+                      <label for="inputtime" class="col-sm-2 control-sidebar-subheading">Date & Time to collect doc's</label>
+                      <div class="col-sm-10">
+                        <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.meetingtime}}</label>     </div>
+                    </div> 
+                    <div class="form-group">
+                      <label for="inputEmail3" class="col-sm-2 control-sidebar-subheading">Other Requirements</label>
+                      <div class="col-sm-10">
+                        <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.otherrequirements}}</label>    </div>
+                    </div>
+                                               <!-- <div class="form-group">
+                              <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">Status Tracker</label>
+                              <div class="col-sm-10">
+                                <label for="inputEmail3"  class="col-sm-2 control-sidebar-subheading">{{order.tracker}}</label>
+                              </div>
+                                </div> -->
+
+
+
+                  </div><!-- /.box-body -->
+                  
+                </form>
+              </div><!-- /.box -->
+              </div>
+              <!-- <div class="col-xs-4">
+<!-- Horizontal Form -->
+             
+
+        </section><!-- /.content -->
+        <section class="content">
+          <div class="row">
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Orders</h3>
+                  <h3 class="box-title">Status Tracker</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <label>Search: <input ng-model="searchText"></label>
+                 
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>Order ID</th>
-                        <th>Customer Details</th>
-                        <th>Type of Property</th>
-                        <th>Property size</th>
-                        <th>Work type</th>
-                        <th>Work sub Type</th>
-                        <th>Time to complete</th>
-                        <th>Property Ownership</th>
-                        <th>Order Time</th>
-                          <th>Address</th>
                         <th>Status</th>
+                        <th>Changed UserId</th>
+                        <th>Time</th>
+                        <th>Reason</th>
+                     
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="order in orderlist|orderBy:'date':true | filter:searchText">
-                        <td>{{order.id}}</td>
-                        <td>{{order.customer.name}}
-                        {{order.customer.phone}}</td>
-                        <td>{{order.info.type_of_property}}</td>
-                        <td>{{order.info.size_of_property}}</td>
-                        <td>{{order.info.type_of_work}}</td>
-                        <td>{{order.info.type_of_sub_work}}</td>
-                        <td>{{order.info.time_to_start_work}}</td>
-                        <td>{{order.info.type_of_ownership}}</td>
-                        <td>{{order.date | date:'medium'}}</td>
-                        <td>{{order.customer.address.addressLine1}}
-                           {{order.customer.address.addressLine2}} 
-                           {{order.customer.address.LandMark}}
-                           {{order.customer.address.city}} 
-                           {{order.customer.address.zip}}</td>
-                       
-                           <td>{{order.current_status}}</td>
-                       </tr>
+                      <tr ng-repeat="tracker in trackerstatus ">
+                         <td>{{tracker.status}}</td>
+                        <td>{{tracker.changedbyuserid}}</td>
+                      
+                        <td>{{tracker.time}}</td>
+                        <td>{{tracker.reason}}</td>
+                    
+                                           
           
                     </tbody>
-                    <tfoot>
-                      <tr>
-                          <th>Order ID</th>
-                          <th>Customer Details</th>
-                          <th>Type of Property</th>
-                          <th>Property size</th>
-                          <th>Work type</th>
-                          <th>Work sub Type</th>
-                          <th>Time to complete</th>
-                          <th>Property Ownership</th>
-                          <th>Order Time</th>
-                            <th>Address</th>
-                          <th>Status</th>
-
-                      </tr>
-                    </tfoot>
+                  
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
           </div><!-- /.row -->
         </section><!-- /.content -->
-
-
-
-
       </div><!-- /.content-wrapper -->
-      <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-          <b>Version</b> 2.3.0
-        </div>
-        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Khaanavali </a>.</strong> All rights reserved.
-      </footer>
-
-      <!-- Control Sidebar -->
+   <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
@@ -424,7 +514,6 @@
     <!-- AdminLTE App -->
     <script src="/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    
     <script src="/dist/js/demo.js"></script>
      <script src="/javascripts/admin.js"></script>
     <!-- page script -->

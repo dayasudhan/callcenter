@@ -59,31 +59,53 @@ app = angular.module("adminModule", []);
           $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
         });
 	};
-	$scope.changestatus = function(parama,param2)
-	{
-		alert(param2);
-		alert(parama.changestatususerid);
-		$scope.changestatususerid = parama.changestatususerid;
-		
-		var url = "/v1/executive/infoall";
-		//url = url + param;
-		$scope.executiveuserid = [];
+	$scope.getOrdersById = function (param) {
+		console.log("getOrdersById");
+	  
+	   console.log("getLeads 2");
+		var url = "/v1/grahak/infobyid/";
+		url = url + param;
+		console.log(url);
 		$http.get(url,config)
 		  .success(function (data, status, headers, config)
 		  {
-			$scope.executivelist = data;
-			$scope.executivetotal = data.length;
-	console.log(data);
-		  angular.forEach($scope.executivelist, function(item) {
-			var userid = item.userid;
-			$scope.executiveuserid.push(userid);
-		  //  item.date.setTimezone("Asia/kolkata");
-	
-		  });
-		}).error(function (data, status, headers, config)
+			  console.log(data);
+			$scope.order = data[0];
+			console.log($scope.order);
+			$scope.trackerstatus = data[0].tracker;
+			console.log($scope.trackerstatus);
+		 
+		 console.log("timestamp 2");
+		  })
+		  .error(function (data, status, headers, config)
 		  {
 			$scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
 		  });
+	  };
+	$scope.changestatus = function(param,param2,param3)
+	{
+		 alert(param3);
+		// alert(param.changestatususerid);
+		//$scope.changestatususerid = param.changestatususerid;
+		var url = "/v1/grahak/changestatus/";
+		 url = url + param2;
+		 var postData={
+			status:"Assigned",
+			userid:param.changestatususerid,
+			changedbyuserid:param3,
+			reason:""
+		   };
+		$http.post(url,postData)
+			.success(function (data, status, headers, config)
+			{
+			console.log("Change status success");
+			alert("Change status success");
+			})
+			.error(function (data, status, headers, config)
+			{
+			console.log("Change status successr");
+			alert("Change status success error");
+			});
 		  console.log($scope.executiveuserid );
 	}
 	$scope.getCSRDetails = function (param) {
@@ -149,7 +171,11 @@ app = angular.module("adminModule", []);
 			 alert(data);
 		  });
 	  };
+	  $scope.openOrdersById = function (param) {
+		console.log("getOrdersById");
 	  
+		window.open("/p/admin_order/"+param, "_blank");
+	  };
 		
   });
 

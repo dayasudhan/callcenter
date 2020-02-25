@@ -134,6 +134,33 @@ app = angular.module("executiveModule", []);
               $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
             });
       };
+      $scope.getOrdersbyassigneduser = function (param) {
+        console.log("getLeads");
+    // $scope.init() ;
+     console.log("getLeads 2");
+        var url = "/v1/grahak/infobyassigneduser/";
+        url = url + param;
+        console.log(url);
+        $http.get(url,config)
+          .success(function (data, status, headers, config)
+          {
+            $scope.orderlist = data;
+            $scope.total2 = data.length;
+  
+          angular.forEach($scope.orderlist, function(item) {
+            var timestamp = item._id.toString().substring(0,8);
+            item.date = new Date( parseInt( timestamp, 16 ) * 1000 );
+          //  item.date.setTimezone("Asia/kolkata");
+            console.log(item._id);
+           console.log(item.date);
+          });
+         console.log("timestamp 2");
+          })
+          .error(function (data, status, headers, config)
+          {
+            $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
+          });
+    };
       $scope.getcustomerbyid = function (param) {
         console.log("getLeads");
     // $scope.init() ;
@@ -167,7 +194,7 @@ app = angular.module("executiveModule", []);
             $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
           });
     };
-      $scope.changestatus = function(parama,param2)
+      $scope.changestatus = function(parama)
       {
         // alert(param2);
          alert(parama);

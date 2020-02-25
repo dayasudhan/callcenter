@@ -30,7 +30,7 @@
   <body class="hold-transition skin-blue sidebar-mini" ng-app="executiveModule">
     <div class="wrapper"  ng-controller="mainController">
 
-      <header class="main-header" data-ng-init="getOrders()"  >
+      <header class="main-header" data-ng-init="getOrdersbyassigneduser('<%= user.local.email %>')"  >
         <!-- Logo -->
         <a href="../../index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->

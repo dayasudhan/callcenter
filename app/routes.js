@@ -386,18 +386,18 @@ app.get('/admin', function (req, res) {
     res.render('admin_login', { user : req.user });
 });
 
-app.get('/p/admin_order', function (req, res) {
+app.get('/p/admin_order/:id', function (req, res) {
     console.log(req.user);
-    res.render('admin_order', { user : req.user });
+    res.render('admin_order', { user : req.user, id:req.params.id});
 });
 app.get('/p/admin_order_today', function (req, res) {
     console.log(req.user);
     res.render('admin_order_today', { user : req.user });
 });
-// app.get('/p/customer_details', function (req, res) {
-//     console.log(req.user);
-//     res.render('customer_details', { user : req.user });
-// });
+app.get('/p/load_xl', function (req, res) {
+    console.log(req.user);
+    res.render('load_xl', { user : req.user });
+});
 app.get('/p/customer_details/:id', function (req, res) {
     console.log(req.user);
     console.log(req.params.id);
@@ -846,13 +846,9 @@ function isLoggedIn(req, res, next) {
 
     res.redirect('/');
 }
-app.get( '/v1/grahak/info/:id', function( request, response ) {
-    console.log("GET --/v1/school/info/");
-   	// if(checkVendorApiAunthaticated(request,1) == false && request.isAuthenticated() == false)
-	// {
-	// 	return response.send("Not aunthiticated").status(403);
-	// }
-    return GrahakModel.find({ 'username':request.params.id},function( err, vendor ) {
+app.get( '/v1/grahak/infobyassigneduser/:id', function( request, response ) {
+    console.log("GET --infobyassigneduser");
+    return GrahakModel.find({'assigneduser':request.params.id},function( err, vendor ) {
         if( !err ) {
             console.log(vendor);
             return response.send( vendor );
@@ -864,10 +860,7 @@ app.get( '/v1/grahak/info/:id', function( request, response ) {
 });
 app.get( '/v1/grahak/infobyid/:id', function( request, response ) {
     console.log("GET --/v1/school/info/");
-   	// if(checkVendorApiAunthaticated(request,1) == false && request.isAuthenticated() == false)
-	// {
-	// 	return response.send("Not aunthiticated").status(403);
-	// }
+
     return GrahakModel.find({ 'id':request.params.id},function( err, vendor ) {
         if( !err ) {
             console.log(vendor);
@@ -894,18 +887,28 @@ app.get( '/v1/grahak/infoall', function( request, response ) {
         }
     });
 });
-app.post( '/v1/grahak/changestatus/:id', function( req, res ) {
+app.post( '/v1/grahak/changestatus/:id', function( request, response ) {
     // if(checkVendorApiAunthaticated(req,1) == false && req.isAuthenticated() == false)
     // {
     //     return res.send("Not aunthiticated").status(403);
     // }
-    var indiantime = new Date();
-    // indiantime.setHours(indiantime.getHours() + 5);
-    // indiantime.setMinutes(indiantime.getMinutes() + 30);
+    var indiantime =  new Date();
+    //  indiantime.setHours(indiantime.getHours() + 5);
+    //  indiantime.setMinutes(indiantime.getMinutes() + 30);
+     var date = indiantime.toDateString(); 
+     var time = indiantime.toLocaleTimeString(); 
+     var status_time  =  date + " " + time;
+     console.log(status_time);
+     console.log(date);
+     console.log(time);
     return GrahakModel.findOneAndUpdate({ 'id':request.params.id},
     { 
+        assigneduser:request.body.userid,
         status:request.body.status,
-        $addToSet: {tracker: {$each:[{status: request.body.status,  time:indiantime,reason:request.body.reason}] }}
+        $addToSet: {tracker: {$each:[{status: request.body.status,  
+            time:status_time,
+            changedbyuserid:request.body.changedbyuserid,
+            reason:request.body.reason}] }}
       },
         function( err, order ) {
       if( !err ) {
@@ -926,10 +929,18 @@ app.post( '/v1/grahak/info2/:id', function( request, response ) {
       addressline:request.body.address,
       landMark:request.body.landmark};
       console.log(address);
+
+			var  date = new Date( request.body.dob);
+
+var mtime = new Date(request.body.meetingtime);
+             var date2 = mtime.toDateString(); 
+             var time = mtime.toLocaleTimeString(); 
+             var meeting_time  =  date2 + " " + time;
+
       return GrahakModel.findOneAndUpdate({ 'id':request.body.id},
       { 
           personalemail:request.body.personalemail,
-          dob:request.body.dob,
+          dob:date.toDateString(),
           salary:request.body.salary,
           //status:String,
           //assigneduser:String,
@@ -942,7 +953,7 @@ app.post( '/v1/grahak/info2/:id', function( request, response ) {
           doctocollect:request.body.doctocollect,
           otherrequirements:request.body.otherrequirements,
           customerstatus:request.body.customerstatus,
-
+          meetingtime:meeting_time
         //  $addToSet: {tracker: {$each:[{status: request.body.status,  time:indiantime,reason:request.body.reason}] }}
         },
           function( err, order ) {
