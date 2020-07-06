@@ -135,8 +135,10 @@ app.post('/v1/m/login', function(req, res, next) {
 app.post('/login', function(req, res, next) {
     console.log('post /login');
       console.log(req.body);
+      
+
   passport.authenticate('local-login', function(err, user, info) {
-   
+    console.log("login authenticate");
     if (err) {
          console.log("error in login 0");
         return next(err); }
@@ -171,7 +173,9 @@ app.post('/login', function(req, res, next) {
             }
             
     }
+    console.log("login start1");
     req.logIn(user, function(err) {
+        console.log("login start2");
       if (err) { return next(err); }
       console.log(req.body.role);
       console.log("login");
@@ -211,6 +215,7 @@ app.post('/login', function(req, res, next) {
      
     });
   })(req, res, next);
+  console.log("login authenticate post");
 });
         // SIGNUP =================================
         // show the signup form

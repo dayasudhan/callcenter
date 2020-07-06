@@ -42,13 +42,17 @@ module.exports = function(passport) {
     function(req, email, password, done) {
         if (email)
             email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
-
+        console.log("local-login 1");
         // asynchronous
         process.nextTick(function() {
+            console.log("local-login 2");
             User.findOne({ 'local.email' :  email }, function(err, user) {
+                console.log("local-login 3");
+                console.log(user)
                 // if there are any errors, return the error
                 if (err)
                 {
+                    console.log("local-login 4");
                     req.flash(err);
                     console.log(err);
                     return done(err);
@@ -63,10 +67,14 @@ module.exports = function(passport) {
 
                 // all is well, return user
                 else
+                {
+                    console.log("local-login 5");
                     return done(null, user);
+                }
             });
+            console.log("local-login 6");
         });
-
+        console.log("local-login 7");
     }));
 
 
