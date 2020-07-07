@@ -476,7 +476,7 @@ console.log(req.body);
 
 app.post('/signup', function(req, res, next) {
 console.log(req.body);
-//console.log(user);
+//console.log(user);/p
   if(req.body.password != req.body.password2)
   {
      
@@ -631,8 +631,8 @@ function registerExecutive(req, res, next) {
                       console.log( 'registerExecutive save complete' );
                     });
                     console.log( '463' );
-                 next("Success");
-                //return res.send('Success');
+                // next("Success");
+                return res.send('Success');
                 } else {
                   console.log( 'registerExecutive error' );
                   console.log( err );
