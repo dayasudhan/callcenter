@@ -542,7 +542,10 @@ console.log(req.body);
         else if(req.body.role == 'CSR') 
         {
           //redirect_url = '/p/executive_details';
-          registerExecutive(req, res, next);
+          registerExecutive(req, res, function()
+          {
+            res.send('Success');
+          });
           //return res.redirect(redirect_url);
         }
         else
@@ -631,8 +634,8 @@ function registerExecutive(req, res, next) {
                       console.log( 'registerExecutive save complete' );
                     });
                     console.log( '463' );
-                // next("Success");
-                return res.send('Success');
+                 next("Success");
+               // return res.send('Success');
                 } else {
                   console.log( 'registerExecutive error' );
                   console.log( err );
