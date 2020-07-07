@@ -42,6 +42,7 @@ module.exports = function(passport) {
     function(req, email, password, done) {
         console.log("req.body 1");
         console.log(req.body);
+        
         console.log("req.body 2");
         if (email)
             email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
@@ -49,7 +50,7 @@ module.exports = function(passport) {
         // asynchronous
         process.nextTick(function() {
             console.log("local-login 2");
-            User.findOne({ 'local.email' :  email,'local.role' :  req.body.role }, function(err, user) {
+            User.findOne({ 'local.email' :  email, 'local.role' :  req.body.role }, function(err, user) {
                 console.log("local-login 3");
                 console.log(user)
                 // if there are any errors, return the error
