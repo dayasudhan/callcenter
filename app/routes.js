@@ -6,6 +6,8 @@ var OtpModel = require('../app/models/otp');
 var Firebase = require("firebase");
 var multer = require('multer');
 var path = require('path');
+var Excel = require("exceljs");
+var workbook = new Excel.Workbook();
 var Client = require('node-rest-client').Client;
 var client = new Client();
 var options = multer.diskStorage({ destination : 'public/images/logo/' ,
@@ -23,26 +25,6 @@ var client_key_vendor = 'tunga';
 var client_key_customer = 'bhoomika';
 var client_key_admin = 'gajanuru';
 var client_key_web = 'pickcock';
-// Firebase.initializeApp({
-//   serviceAccount: {
-//   "type": "service_account",
-//   "project_id": "project-8598805513533999178",
-//   "private_key_id": "82abba7994a0894b4b38ee0c66d05cf80dd99efc",
-//   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCGKNGc8VwvoTrX\njusnjmbMAmjTjBJ/2Tu/gzktQxfoY0mIe31NUufw0mnBQYOJakU1FORvw8USn3QM\nNCu8h1UvfhvkUVI/FjAdEcuBh+PFOULqFWYlalK3560qvGlE6xHnftgLQC/LI9R4\nmO0moRLBrQ2Oq2JVUwIE58xiXgw5WyMxnZ4IS1kons5UmutUw3QtRMfvwLHrkV/z\na8oP6XPXeECp7FWrvtF53PYFLRurL1bFQsSNwHFw8su8BhEhjpXXD1SDKyEpnz4E\nr8P2wTS1116mrVkNXWyY0rV7fyBvqeh/oH0AZVOzDCueFkT3Q2eZJcGUnGp9uTCb\nExXNIws/AgMBAAECggEAST2LgYR6cT4x43AQjJ2/HOzL0YGMr+MmLR00X7NbH/Dk\nOfBAra/vE5erSGe9qY0sjxgCxck4kzwdnHP21IuFQ9Iy4+hJYEt6pMQMN4C6Jfdm\nwmhARXjQA7ok3UnSpl82fQzQYQP/k4TR/6xs+0O/+5+/4P1LR41zcr4g5Cq3va9l\n4W37dOgaYCUSprWXFQtD5kztcOYNeyuPGg7IYIL/xBo8mqaH49wAf1SureSJauKK\ndEc8hq4FuR9VAWlISV4GBZ4w6DL+N2KrOFbwBiqbt6IASoh7p6k2H+beExmKCpeG\nUDORBsuMRNsYFvQDmS8q6XwYjX4TVh/Agp7jv+DaEQKBgQDorbsL+f+/GZQQ1+ds\nSMQdhvOLXpO8Oh7eAjTTY3K/UNTKCkEoTkam51Bv4O4b/qIXKbcqRyTfqbW9e/mb\nuY0SK/+2N0XTo3X71jJDRKE+Zls1j2/slaDeiUzRxXIF+J0SIgEV5hPbEGNYdGuK\niDP0Mr82GQ998kyKcMBIqG8yZQKBgQCTmzKhmt7GmwCWnxZlvc1yB1nII2r+L1CT\nVQudMgNyWLAF3XtVXC6mntGhEdzcygvB/AOwusMI60duCgZK/+x0JNdyLKvFkmeT\nh4djfppGSjwtzzW1geBgJQnyWdoBv/q6Z68Ms3NSexTODbfC2qfBpR27oECZr4Hz\n7P45S+Fa0wKBgDfBKYj9JuNL5ccDdVjlNtk8dS94Qj5gTvUz4iSlN+HQJK0lN+fI\nmfV0iDnG1EexBHY4cMOYuKU/rWTySCWgmMU59dRb+kd0a9kkwnaMA3dIX6K99Dvk\nvt+UVuwNO/1iTYEC1O/Cag+cJbIUc5CGgqyJXHhCGQw8+0pRKkI+2iZhAoGAD5Qw\nyteyrZmMfVk7Hu/icCeQdUwvrbZGtdYjDKtLq9TqdyQCMWcyUUmv7GUbP35fsVCs\n/wknLpjOiDGsqlvKlBOTXayTUJ38KpkCVCD3nXWWVmtpSsfza5JdM2QCW27swqHQ\n2vFRuaHd90WBYKJ9VDXeJoBqcQ4SFDGuP1Pf7BsCgYEA0bVl9WMaIAe8V6AtwYjz\nLx1KRQ3mZWwXdEBitciQhnDeutMgaExkwCJHag6VGfOljNe/JtgCEzqWWh0rvFzi\nUn2WZA/kcqByHIQzVqJwhFkVjRzS5/qVrTvZw0xu2HVQD4iV6OHRMS3TeIUbGqOK\ngFYR4uhQAX6sXvXp4uU16bs=\n-----END PRIVATE KEY-----\n",
-//   "client_email": "khaanavali@project-8598805513533999178.iam.gserviceaccount.com",
-//   "client_id": "110281937967415310229",
-//   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-//   "token_uri": "https://accounts.google.com/o/oauth2/token",
-//   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-//   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/khaanavali%40project-8598805513533999178.iam.gserviceaccount.com"
-// },
-//   databaseURL: "https://project-8598805513533999178.firebaseio.com"
-// });
-
-
-
-
-//var rootRef = Firebase.database().ref();
 
 
 module.exports = function(app, passport) {
@@ -644,6 +626,87 @@ function registerExecutive(req, res, next) {
           });
       });
   };
+  app.post( '/v1/admin/exceldata/',function( req, res ) {
+ 
+  console.log("VendorLogo post");
+  console.log(req.body[0] );
+  
+  //console.log(req.body[1]);
+ // var data = JSON.parse(req.body);
+  var data = JSON.parse(JSON.stringify(req.body).replace(/\s(?=\w+":)/g, ""));
+  console.log(data.size);
+  console.log(data.length);
+  console.log(data[27]);
+  var taskid = "T";
+  var i;
+  for( i = 0; i< data.length ;i++)
+  {
+    var res = getNextSequence('task',function(data) {
+        taskid = taskid + data.sequence;
+    var grahakInfo = new GrahakModel({
+        phone:data[i].MobNo ,
+        name:data[i].CusName ,
+        assigneduser:"Manager",
+        id:taskid,
+        status:data[i].status,
+        income:data[i].Income,
+        tracker:  [{status:data[i].status,time:indiantime,reason:data[i].Remark}]  ,
+      });
+      grahakInfo.save( function( err ) {
+        if( !err ) {
+              console.log( 'grahakInfo created' );
+              req.session.save(function (err) {
+                    if (err) {
+                        console.log( 'grahakInfo save error' );
+                      return next(err);
+                    }
+                    console.log( 'grahakInfo save complete' );
+                  });
+              return ;
+              } else {
+                console.log( 'grahakInfo error' );
+                console.log( err );
+                return res.send('ERROR');
+              }
+        });
+    });
+  }
+   return res.send("done");
+});
+  app.post( '/v1/admin/loadexcel/',function( req, res ) {
+    console.log("commentInfo post");
+    console.log(req.body);
+  
+    var filePath =req.body.filepath;
+    console.log(filePath);
+    workbook.xlsx.readFile(filePath).then(function () {
+        console.log("111");
+        //Use sheetName in getWor console.log(workbook);
+        var worksheet = workbook.getWorksheet("SheetInfo");
+        console.log("222");
+        
+        workbook.eachSheet(function(worksheet, sheetId) {
+            console.log(worksheet.getRow('1').getCell(1).value);
+            console.log(worksheet.getRow('2').getCell(1).value);
+            console.log(worksheet.getRow('3').getCell(2).value);
+            worksheet.eachRow({ includeEmpty: false }, function (row, rowNumber) {
+                console.log("Current Row:" + rowNumber);
+                //Second iterator for cells in row
+                row.eachCell({ includeEmpty: false }, function (cell, colNumber) {
+                //print row number, column number and cell value at[row][col]
+                console.log("Cell Value= " + cell.value  + " col no= " + colNumber);
+                
+                        });
+              });
+
+              ////
+
+             
+              ////
+          });
+      });
+   return res.send("done");
+});
 app.get( '/v1/test/customer', function( req, res ) {
                 req.body.email = "dayasudhankggg@gmail.com";
                 req.body.phoneNumber = "9987";
@@ -886,6 +949,7 @@ app.get( '/v1/grahak/infoall', function( request, response ) {
 	// 	return response.send("Not aunthiticated").status(403);
 	// }
     return GrahakModel.find(function( err, vendor ) {
+        console.log("GrahakModel.find");
         if( !err ) {
             console.log(vendor);
             return response.send( vendor );

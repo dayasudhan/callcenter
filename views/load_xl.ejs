@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bescom Shift Chart</title>
+    <title>Load Excel sheet</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -22,7 +22,10 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <script type="text/javascript"
      src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+     
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -30,10 +33,9 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app="vendorModule">
-    <div class="wrapper"  ng-controller="DetailsController">
-
-      <header class="main-header" data-ng-init="getDetails('<%= user.local.email %>')"  >
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule">
+    <div class="wrapper"  ng-controller="adminController">
+      <header class="main-header" >
         <!-- Logo -->
         <a href="../../index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -80,7 +82,7 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                  <span class="hidden-xs"><%= user.local.email%></span>
+               
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
@@ -132,7 +134,7 @@
               <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p><%= user.local.email%></p>
+            
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
@@ -154,7 +156,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-              Student Details
+              Load Excel sheet
             <!-- <small>advanced tables</small> -->
           </h1>
           <ol class="breadcrumb">
@@ -185,17 +187,11 @@
                         <input type="text" class="form-control"  name="Feeder No"  placeholder={{feederno}} ng-model = "studentname" required>
                       </div>
                     </div>
-                    
-                
-
-
-
                   </div><!-- /.box-body -->
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-info pull-right" ng-click= "addStudentDetails('<%= user.local.email %>')">Submit</button>
+                    <button type="submit" class="btn btn-info pull-right" ng-click= "addStudentDetails('test')">Submit</button>
 
-                     <!--button type="submit" class="btn btn-default" onclick="menu_add(this.form,'<%= user.local.email %>')">Submit</button>&nbsp;<a href="/"-->
-                  </div><!-- /.box-footer -->
+                   </div><!-- /.box-footer -->
                 </form>
               </div><!-- /.box -->
               </div>
@@ -203,20 +199,17 @@
 <!-- Horizontal Form -->
               <div class="box box-info">
                 <div class="box-header with-border">
-                  <h3 class="box-title">LogoAdd</h3>
+                  <h3 class="box-title">Load XL File</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <form class="form-horizontal">
                   <div class="form-group">
                       <label for="exampleInputFile" class="col-sm-2 control-label">Logo</label>
                       <div class="col-sm-10">
-                        <input type="file" name="file" id="logoinputfile" onchange="angular.element(this).scope().addLogo('<%= user.local.email %>',this.files)">
+                        <input type="file" name="file" id="logoinputfile" onchange="angular.element(this).scope().addLogo('test',this.files)">
                       </div>
                     </div>
-                  <!--div class="box-footer">
-                    <button type="submit" class="btn btn-info pull-right" ng-click= "addLogo('<%= user.local.email %>')">Add Logo</button>
-
-                  </div><!-- /.box-footer -->
+              
                 </form>
               </div>
               </div>
@@ -416,7 +409,7 @@
     <script src="/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/dist/js/demo.js"></script>
-     <script src="/javascripts/vendor2.js"></script>
+     <script src="/javascripts/admin.js"></script>
     <!-- page script -->
     <script>
       $(function () {

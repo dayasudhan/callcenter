@@ -176,7 +176,110 @@ app = angular.module("adminModule", []);
 	  
 		window.open("/p/admin_order/"+param, "_blank");
 	  };
+
+  
+	  $scope.addComment= function (param) {
+		console.log("addComment 1");
+		var url = "/v1/comment/info/";
 		
+  
+		var fd = new FormData();
+	   // console.log( $scope.files[0]);
+  
+		// var postData={
+		//   heading:$scope.heading,
+		//   description:$scope.description,
+		// };
+	   if($scope.files)
+	   {
+		fd.append("file",  $scope.files[0]);
+		  }
+	   else
+	   {
+		fd.append("file",  null);
+		}
+		  fd.append("data", JSON.stringify(postData));
+		url = url + param;
+	  $http.post(url,fd, {
+		  withCredentials: true,
+		  headers: {'Content-Type': undefined , 'enctype': 'multipart/form-data' },
+		  transformRequest: angular.identity
+		}).success(function (data, status, headers, config)
+		  {
+			  console.log("addComment success");
+			  alert("addComment success");
+  
+		  })
+		  .error(function (data, status, headers, config)
+		  {
+			console.log("addComment error");
+			 alert("addComment error");
+		  });
+	  };
+	  $scope.addLogo = function (param,files) {
+		console.log("addLogo");
+	
+		var fd = new FormData();
+		console.log(files[0]);
+		var xl2json = new ExcelToJSON();
+
+		xl2json.parseExcel(files[0]);
+//			console.log(postData[0]);
+
+		   
+	  };
+	  var ExcelToJSON = function() {
+		var jsonarray1 = [];
+		var jsonobrtoret ;
+		this.parseExcel = function(file) {
+		  var reader = new FileReader();
+	  
+		  reader.onload = function(e) {
+			var data = e.target.result;
+			var workbook = XLSX.read(data, {
+			  type: 'binary'
+			});
+	
+			workbook.SheetNames.forEach(function(sheetName) {
+			  // Here is your object
+			  console.log(sheetName);
+			  var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			//  var json_object = JSON.stringify(XL_row_object);
+			console.log(XL_row_object);
+			  var json_object = JSON.stringify(XL_row_object, null, 1).replace(/^ +/gm, " ").replace(/\n/g, "").replace(/{ /g, "{").replace(/ }/g, "}").replace(/\[ /g, "[").replace(/ \]/g, "]");
+			//  console.log(json_object);
+			  if(sheetName == "main csr calling sheet")
+			  {
+				  jsonarray1.push(json_object);
+				  jsonobrtoret = json_object;
+				  
+				  $scope.json_object = json_object;
+				  console.log($scope.json_object);
+				  var url = "/v1/admin/exceldata/";
+					var senddata = {data1:$scope.json_object};
+					$http.post(url,$scope.json_object).success(function (data, status, headers, config)
+					{
+						console.log("addxlsheet success");
+					})
+					.error(function (data, status, headers, config)
+					{
+						console.log("addxlsheet error");
+					});
+				//  return json_object;
+			  }
+			  //console.log(jsonarray1[0]);
+			})
+	  
+		  };
+	  
+		  reader.onerror = function(ex) {
+			console.log(ex);
+		  };
+	  
+		  reader.readAsBinaryString(file);
+		  return jsonobrtoret ;
+		};
+	  };
   });
 
 

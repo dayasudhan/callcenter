@@ -2,8 +2,8 @@
   "name": "node-authentication",
   "main": "server.js",
   "engines": {
-    "node": "6.11.1"
-  , "npm": "3.10.10"
+    "node": "6.11.1",
+    "npm": "3.10.10"
   },
   "dependencies": {
     "bcrypt-nodejs": "latest",
@@ -22,7 +22,8 @@
     "passport-google-oauth": "~0.1.5",
     "passport-local": "~0.1.6",
     "passport-twitter": "~1.0.2",
-    "node-rest-client":"*",
-    "multer": "1.1.0"
+    "node-rest-client": "*",
+    "multer": "1.1.0",
+    "exceljs": "3.8.0"
   }
 }
