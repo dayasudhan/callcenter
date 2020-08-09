@@ -668,10 +668,10 @@ function registerExecutive(req, res, next) {
                 console.log( err );
                 return res.send('ERROR');
               }
-        });
+        });                 
     });
   }
-   return res.send("done");
+  // return res.send('done');
 });
   app.post( '/v1/admin/loadexcel/',function( req, res ) {
     console.log("commentInfo post");
@@ -705,7 +705,7 @@ function registerExecutive(req, res, next) {
               ////
           });
       });
-   return res.send("done");
+  // return res.send("done");
 });
 app.get( '/v1/test/customer', function( req, res ) {
                 req.body.email = "dayasudhankggg@gmail.com";
