@@ -639,7 +639,7 @@ function registerExecutive(req, res, next) {
   console.log(data[27]);
   var taskid = "T";
   var i;
-  for( i = 0; i< data.length ;i++)
+  for( i = 0; i< 1 ;i++)
   {
     var res = getNextSequence('task',function(data) {
         taskid = taskid + data.sequence;
