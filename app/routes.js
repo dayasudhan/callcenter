@@ -649,13 +649,13 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
     var res = getNextSequence('task',function(sequencedata) {
         var ntaskid = taskid + sequencedata.sequence;
     var grahakInfo = new GrahakModel({
-        phone:data.MobNo ,
-        name:data.CusName ,
+        phone:data[i].MobNo ,
+        name:data[i].CusName ,
         assigneduser:"Manager",
         id:ntaskid,
-        status:data.status,
-        income:data.Income,
-        tracker:  [{status:data.status,time:indiantime,reason:data.Remark}]  ,
+        status:data[i].status,
+        income:data[i].Income,
+        tracker:  [{status:data[i].status,time:indiantime,reason:data[i].Remark}]  ,
       });
       grahakInfo.save( function( err ) {
         if( !err ) {
@@ -676,10 +676,10 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
                 return res.send('ERROR');
               }
         });    
-        // setTimeout(function() {
+        setTimeout(function() {
           
-        // }, 1000);
-        // sleep.msleep(1000);             
+        }, 1000);
+        sleep.msleep(1000);             
     });
     
   }
