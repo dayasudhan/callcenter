@@ -641,9 +641,7 @@ function registerExecutive(req, res, next) {
   
   var i;
   
-  var indiantime = new Date();
-indiantime.setHours(indiantime.getHours() + 5);
-indiantime.setMinutes(indiantime.getMinutes() + 30);
+  
   for( i = 0; i< 5 ;i++)
   {
     savegrahkinfo(data[i],res);
@@ -656,6 +654,9 @@ function savegrahkinfo(data,res)
 {
     console.log(data.CusName);
     var taskid = "T";
+    var indiantime = new Date();
+    indiantime.setHours(indiantime.getHours() + 5);
+    indiantime.setMinutes(indiantime.getMinutes() + 30);
  var res = getNextSequence('task',function(sequencedata) {
         var ntaskid = taskid + sequencedata.sequence;
     var grahakInfo = new GrahakModel({
