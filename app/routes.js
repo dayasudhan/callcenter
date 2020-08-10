@@ -676,9 +676,9 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
                 return res.send('ERROR');
               }
         });    
-        setTimeout(function() {
+        // setTimeout(function() {
           
-        }, 1000);
+        // }, 1000);
         // sleep.msleep(1000);             
     });
     
