@@ -679,7 +679,7 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
         setTimeout(function() {
           
         }, 1000);
-        sleep.msleep(1000);             
+      //  sleep.msleep(1000);             
     });
     
   }
