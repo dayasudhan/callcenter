@@ -6,6 +6,7 @@ var OtpModel = require('../app/models/otp');
 var Firebase = require("firebase");
 var multer = require('multer');
 var path = require('path');
+// var sleep = require('sleep');
 // var Excel = require("exceljs");
 // var workbook = new Excel.Workbook();
 var Client = require('node-rest-client').Client;
@@ -639,6 +640,7 @@ function registerExecutive(req, res, next) {
   console.log(data[0].MobNo);
   var taskid = "T";
   var i;
+  
   var indiantime = new Date();
 indiantime.setHours(indiantime.getHours() + 5);
 indiantime.setMinutes(indiantime.getMinutes() + 30);
@@ -673,6 +675,7 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
               }
         });                 
     });
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 100);
   }
   // return res.send('done');
 });
