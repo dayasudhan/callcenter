@@ -630,12 +630,12 @@ function registerExecutive(req, res, next) {
   app.post( '/v1/admin/exceldata/',function( req, res ) {
  
   console.log("VendorLogo post");
-  console.log(req.body[0] );
+//  console.log(req.body[0] );
   
   //console.log(req.body[1]);
  // var data = JSON.parse(req.body);
   var data = JSON.parse(JSON.stringify(req.body).replace(/\s(?=\w+":)/g, ""));
-   console.log(data);
+  // console.log(data);
 //   console.log(data.length);
 //   console.log(data[0].MobNo);
   var taskid = "T";
@@ -646,17 +646,25 @@ indiantime.setHours(indiantime.getHours() + 5);
 indiantime.setMinutes(indiantime.getMinutes() + 30);
   for( i = 0; i< 5 ;i++)
   {
-    setTimeout(function() {
-    var res = getNextSequence('task',function(sequencedata) {
+    savegrahkinfo(data[i],res);
+    console.log(i);
+    console.log(data[i].MobNo);
+  }
+  // return res.send('done');
+});
+function savegrahkinfo(data,res)
+{
+    console.log(data.CusName);
+ var res = getNextSequence('task',function(sequencedata) {
         var ntaskid = taskid + sequencedata.sequence;
     var grahakInfo = new GrahakModel({
-        phone:data[i].MobNo ,
-        name:data[i].CusName ,
+        phone:data.MobNo ,
+        name:data.CusName ,
         assigneduser:"Manager",
         id:ntaskid,
-        status:data[i].status,
-        income:data[i].Income,
-        tracker:  [{status:data[i].status,time:indiantime,reason:data[i].Remark}]  ,
+        status:data.status,
+        income:data.Income,
+        tracker:  [{status:data.status,time:indiantime,reason:data.Remark}]  ,
       });
       grahakInfo.save( function( err ) {
         if( !err ) {
@@ -677,15 +685,10 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
                 return res.send('ERROR');
               }
         });    
-      
-          
-       
-      //  sleep.msleep(1000);             
+           
     });
-}, 1000);
-  }
-  // return res.send('done');
-});
+
+}
 //   app.post( '/v1/admin/loadexcel/',function( req, res ) {
 //     console.log("commentInfo post");
 //     console.log(req.body);
