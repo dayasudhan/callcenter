@@ -6,7 +6,7 @@ var OtpModel = require('../app/models/otp');
 var Firebase = require("firebase");
 var multer = require('multer');
 var path = require('path');
-// var sleep = require('sleep');
+ var sleep = require('sleep');
 // var Excel = require("exceljs");
 // var workbook = new Excel.Workbook();
 var Client = require('node-rest-client').Client;
@@ -675,7 +675,7 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
               }
         });                 
     });
-    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 100);
+    sleep.msleep(100);
   }
   // return res.send('done');
 });
