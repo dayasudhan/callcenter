@@ -644,7 +644,7 @@ function registerExecutive(req, res, next) {
   var indiantime = new Date();
 indiantime.setHours(indiantime.getHours() + 5);
 indiantime.setMinutes(indiantime.getMinutes() + 30);
-  for( i = 0; i< 5 ;i++)
+  for( i = 0; i< 5 ;)
   {
     var res = getNextSequence('task',function(sequencedata) {
         var ntaskid = taskid + sequencedata.sequence;
@@ -663,15 +663,17 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
               req.session.save(function (err) {
                     if (err) {
                         console.log( 'grahakInfo save error' );
-                     // return next(err);
+                      return next(err);
+                     
                     }
                     console.log( 'grahakInfo save complete' );
+                    i++;
                   });
              // return ;
               } else {
                 console.log( 'grahakInfo error' );
                 console.log( err );
-               // return res.send('ERROR');
+                return res.send('ERROR');
               }
         });                 
     });
