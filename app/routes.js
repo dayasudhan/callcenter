@@ -644,7 +644,7 @@ function registerExecutive(req, res, next) {
   var indiantime = new Date();
 indiantime.setHours(indiantime.getHours() + 5);
 indiantime.setMinutes(indiantime.getMinutes() + 30);
-  for( i = 0; i< 5 ;)
+  for( i = 0; i< 5 ;i++)
   {
     var res = getNextSequence('task',function(sequencedata) {
         var ntaskid = taskid + sequencedata.sequence;
@@ -667,7 +667,7 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
                      
                     }
                     console.log( 'grahakInfo save complete' );
-                    i++;
+                    sleep.msleep(1000);
                   });
              // return ;
               } else {
@@ -677,7 +677,7 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
               }
         });                 
     });
-    sleep.msleep(1000);
+    
   }
   // return res.send('done');
 });
