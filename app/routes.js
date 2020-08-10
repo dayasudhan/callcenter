@@ -642,7 +642,7 @@ function registerExecutive(req, res, next) {
   var i;
   
   
-  for( i = 0; i< 5 ;i++)
+  for( i = 0; i< data.length ;i++)
   {
     savegrahkinfo(data[i],req,res);
     console.log(i);
