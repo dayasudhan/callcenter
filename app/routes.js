@@ -636,7 +636,7 @@ function registerExecutive(req, res, next) {
   var data = JSON.parse(JSON.stringify(req.body).replace(/\s(?=\w+":)/g, ""));
   console.log(data.size);
   console.log(data.length);
-  console.log(data[27]);
+  console.log(data[0]);
   var taskid = "T";
   var i;
   for( i = 0; i< 1 ;i++)
