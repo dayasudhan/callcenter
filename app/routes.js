@@ -673,40 +673,40 @@ function registerExecutive(req, res, next) {
   }
   // return res.send('done');
 });
-  app.post( '/v1/admin/loadexcel/',function( req, res ) {
-    console.log("commentInfo post");
-    console.log(req.body);
+//   app.post( '/v1/admin/loadexcel/',function( req, res ) {
+//     console.log("commentInfo post");
+//     console.log(req.body);
   
-    var filePath =req.body.filepath;
-    console.log(filePath);
-    workbook.xlsx.readFile(filePath).then(function () {
-        console.log("111");
-        //Use sheetName in getWor console.log(workbook);
-        var worksheet = workbook.getWorksheet("SheetInfo");
-        console.log("222");
+//     var filePath =req.body.filepath;
+//     console.log(filePath);
+//     workbook.xlsx.readFile(filePath).then(function () {
+//         console.log("111");
+//         //Use sheetName in getWor console.log(workbook);
+//         var worksheet = workbook.getWorksheet("SheetInfo");
+//         console.log("222");
         
-        workbook.eachSheet(function(worksheet, sheetId) {
-            console.log(worksheet.getRow('1').getCell(1).value);
-            console.log(worksheet.getRow('2').getCell(1).value);
-            console.log(worksheet.getRow('3').getCell(2).value);
-            worksheet.eachRow({ includeEmpty: false }, function (row, rowNumber) {
-                console.log("Current Row:" + rowNumber);
-                //Second iterator for cells in row
-                row.eachCell({ includeEmpty: false }, function (cell, colNumber) {
-                //print row number, column number and cell value at[row][col]
-                console.log("Cell Value= " + cell.value  + " col no= " + colNumber);
+//         workbook.eachSheet(function(worksheet, sheetId) {
+//             console.log(worksheet.getRow('1').getCell(1).value);
+//             console.log(worksheet.getRow('2').getCell(1).value);
+//             console.log(worksheet.getRow('3').getCell(2).value);
+//             worksheet.eachRow({ includeEmpty: false }, function (row, rowNumber) {
+//                 console.log("Current Row:" + rowNumber);
+//                 //Second iterator for cells in row
+//                 row.eachCell({ includeEmpty: false }, function (cell, colNumber) {
+//                 //print row number, column number and cell value at[row][col]
+//                 console.log("Cell Value= " + cell.value  + " col no= " + colNumber);
                 
-                        });
-              });
+//                         });
+//               });
 
-              ////
+//               ////
 
              
-              ////
-          });
-      });
-  // return res.send("done");
-});
+//               ////
+//           });
+//       });
+//   // return res.send("done");
+// });
 app.get( '/v1/test/customer', function( req, res ) {
                 req.body.email = "dayasudhankggg@gmail.com";
                 req.body.phoneNumber = "9987";
