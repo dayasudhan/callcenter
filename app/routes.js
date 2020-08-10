@@ -644,13 +644,13 @@ function registerExecutive(req, res, next) {
   
   for( i = 0; i< 5 ;i++)
   {
-    savegrahkinfo(data[i],res);
+    savegrahkinfo(data[i],req,res);
     console.log(i);
     console.log(data[i].MobNo);
   }
   // return res.send('done');
 });
-function savegrahkinfo(data,res)
+function savegrahkinfo(data,req,res)
 {
     console.log(data.CusName);
     var taskid = "T";
