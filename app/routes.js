@@ -642,15 +642,15 @@ function registerExecutive(req, res, next) {
   var indiantime = new Date();
 indiantime.setHours(indiantime.getHours() + 5);
 indiantime.setMinutes(indiantime.getMinutes() + 30);
-  for( i = 0; i< 10 ;i++)
+  for( i = 0; i< 5 ;i++)
   {
     var res = getNextSequence('task',function(sequencedata) {
-        taskid = taskid + sequencedata.sequence;
+        var ntaskid = taskid + sequencedata.sequence;
     var grahakInfo = new GrahakModel({
         phone:data[i].MobNo ,
         name:data[i].CusName ,
         assigneduser:"Manager",
-        id:taskid,
+        id:ntaskid,
         status:data[i].status,
         income:data[i].Income,
         tracker:  [{status:data[i].status,time:indiantime,reason:data[i].Remark}]  ,
