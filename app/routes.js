@@ -663,19 +663,19 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
               req.session.save(function (err) {
                     if (err) {
                         console.log( 'grahakInfo save error' );
-                      return next(err);
+                     // return next(err);
                     }
                     console.log( 'grahakInfo save complete' );
                   });
-              return ;
+             // return ;
               } else {
                 console.log( 'grahakInfo error' );
                 console.log( err );
-                return res.send('ERROR');
+               // return res.send('ERROR');
               }
         });                 
     });
-    sleep.msleep(100);
+    sleep.msleep(1000);
   }
   // return res.send('done');
 });
