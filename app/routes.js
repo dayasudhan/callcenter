@@ -636,13 +636,13 @@ function registerExecutive(req, res, next) {
   var data = JSON.parse(JSON.stringify(req.body).replace(/\s(?=\w+":)/g, ""));
   console.log(data.size);
   console.log(data.length);
-  console.log(data[0]);
+  console.log(data[0].MobNo);
   var taskid = "T";
   var i;
   for( i = 0; i< 1 ;i++)
   {
-    var res = getNextSequence('task',function(data) {
-        taskid = taskid + data.sequence;
+    var res = getNextSequence('task',function(sequencedata) {
+        taskid = taskid + sequencedata.sequence;
     var grahakInfo = new GrahakModel({
         phone:data[i].MobNo ,
         name:data[i].CusName ,
