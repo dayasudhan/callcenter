@@ -642,7 +642,7 @@ function registerExecutive(req, res, next) {
   var indiantime = new Date();
 indiantime.setHours(indiantime.getHours() + 5);
 indiantime.setMinutes(indiantime.getMinutes() + 30);
-  for( i = 0; i< data.length ;i++)
+  for( i = 0; i< 10 ;i++)
   {
     var res = getNextSequence('task',function(sequencedata) {
         taskid = taskid + sequencedata.sequence;
