@@ -639,6 +639,9 @@ function registerExecutive(req, res, next) {
   console.log(data[0].MobNo);
   var taskid = "T";
   var i;
+  var indiantime = new Date();
+indiantime.setHours(indiantime.getHours() + 5);
+indiantime.setMinutes(indiantime.getMinutes() + 30);
   for( i = 0; i< 1 ;i++)
   {
     var res = getNextSequence('task',function(sequencedata) {
