@@ -646,6 +646,7 @@ indiantime.setHours(indiantime.getHours() + 5);
 indiantime.setMinutes(indiantime.getMinutes() + 30);
   for( i = 0; i< 5 ;i++)
   {
+    setTimeout(function() {
     var res = getNextSequence('task',function(sequencedata) {
         var ntaskid = taskid + sequencedata.sequence;
     var grahakInfo = new GrahakModel({
@@ -676,12 +677,12 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
                 return res.send('ERROR');
               }
         });    
-        setTimeout(function() {
+      
           
-        }, 1000);
+       
       //  sleep.msleep(1000);             
     });
-    
+}, 1000);
   }
   // return res.send('done');
 });
