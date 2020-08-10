@@ -6,7 +6,7 @@ var OtpModel = require('../app/models/otp');
 var Firebase = require("firebase");
 var multer = require('multer');
 var path = require('path');
- var sleep = require('sleep');
+ //var sleep = require('sleep');
 // var Excel = require("exceljs");
 // var workbook = new Excel.Workbook();
 var Client = require('node-rest-client').Client;
@@ -635,9 +635,9 @@ function registerExecutive(req, res, next) {
   //console.log(req.body[1]);
  // var data = JSON.parse(req.body);
   var data = JSON.parse(JSON.stringify(req.body).replace(/\s(?=\w+":)/g, ""));
-  console.log(data.size);
-  console.log(data.length);
-  console.log(data[0].MobNo);
+   console.log(data);
+//   console.log(data.length);
+//   console.log(data[0].MobNo);
   var taskid = "T";
   var i;
   
@@ -649,13 +649,13 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
     var res = getNextSequence('task',function(sequencedata) {
         var ntaskid = taskid + sequencedata.sequence;
     var grahakInfo = new GrahakModel({
-        phone:data[i].MobNo ,
-        name:data[i].CusName ,
+        phone:data.MobNo ,
+        name:data.CusName ,
         assigneduser:"Manager",
         id:ntaskid,
-        status:data[i].status,
-        income:data[i].Income,
-        tracker:  [{status:data[i].status,time:indiantime,reason:data[i].Remark}]  ,
+        status:data.status,
+        income:data.Income,
+        tracker:  [{status:data.status,time:indiantime,reason:data.Remark}]  ,
       });
       grahakInfo.save( function( err ) {
         if( !err ) {
@@ -667,7 +667,7 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
                      
                     }
                     console.log( 'grahakInfo save complete' );
-                    sleep.msleep(1000);
+                    
                   });
              // return ;
               } else {
@@ -675,7 +675,11 @@ indiantime.setMinutes(indiantime.getMinutes() + 30);
                 console.log( err );
                 return res.send('ERROR');
               }
-        });                 
+        });    
+        setTimeout(function() {
+          
+        }, 1000);
+        // sleep.msleep(1000);             
     });
     
   }

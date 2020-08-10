@@ -243,6 +243,7 @@ app = angular.module("adminModule", []);
 			workbook.SheetNames.forEach(function(sheetName) {
 			  // Here is your object
 			  console.log(sheetName);
+			  XLSX.shee
 			  var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 			//  var json_object = JSON.stringify(XL_row_object);
 			console.log(XL_row_object);
@@ -255,6 +256,9 @@ app = angular.module("adminModule", []);
 				  
 				  $scope.json_object = json_object;
 				  console.log($scope.json_object);
+				//   var data12 = JSON.parse(JSON.stringify($scope.json_object).replace(/\s(?=\w+":)/g, ""));
+				//   console.log(data12);
+				//   console.log(data12[0]);
 				  var url = "/v1/admin/exceldata/";
 					var senddata = {data1:$scope.json_object};
 					$http.post(url,$scope.json_object).success(function (data, status, headers, config)
