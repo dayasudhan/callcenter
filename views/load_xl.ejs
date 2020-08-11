@@ -39,9 +39,9 @@
         <!-- Logo -->
         <a href="../../index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>School Software</b>LT</span>
+          <span class="logo-mini"><b>CInfo Call Center</b>LT</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>School</b></span>
+          <span class="logo-lg"><b>CInfo</b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -142,10 +142,10 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">LABELS</li>
-            <li><a href="/p/school_details"><i class="fa fa-circle-o text-red"></i> <span>School Details</span></a></li>
-            <li><a href="/p/student_details"><i class="fa fa-circle-o text-yellow"></i> <span>Student Details</span></a></li>
-            <li><a href="/p/student_attendence"><i class="fa fa-circle-o text-aqua"></i> <span>School Details2</span></a></li>
-                    <li><a href="/p/student_markssheet"><i class="fa fa-circle-o text-aqua"></i> <span>About Me</span></a></li>
+            <li><a href="/p/admin_order_today"><i class="fa fa-circle-o text-red"></i> <span>Leads</span></a></li>
+             <li><a href="/p/load_xl"><i class="fa fa-circle-o text-yellow"></i> <span>Load Excel</span></a></li>
+               <li><a href="/p/manager_executive"><i class="fa fa-circle-o text-aqua"></i> <span>Add New CSR</span></a></li>
+            <li><a href="/p/CSR_list"><i class="fa fa-circle-o text-aqua"></i> <span>CSR List</span></a></li>
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -172,39 +172,17 @@
         <section class="content">
           <div class="row">
 
-              <div class="col-xs-8">
-<!-- Horizontal Form -->
-              <div class="box box-info">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Enter School Details</h3>
-                </div><!-- /.box-header -->
-                <!-- form start -->
-                <form class="form-horizontal" >
-                  <div class="box-body">
-                     <div class="form-group">
-                      <label for="inputEmail3"  class="col-sm-2 control-label">Student Name</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control"  name="Feeder No"  placeholder={{feederno}} ng-model = "studentname" required>
-                      </div>
-                    </div>
-                  </div><!-- /.box-body -->
-                  <div class="box-footer">
-                    <button type="submit" class="btn btn-info pull-right" ng-click= "addStudentDetails('test')">Submit</button>
 
-                   </div><!-- /.box-footer -->
-                </form>
-              </div><!-- /.box -->
-              </div>
               <div class="col-xs-4">
 <!-- Horizontal Form -->
               <div class="box box-info">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Load XL File</h3>
+                  <h3 class="box-title">Open Xl sheet Which contains customer Info</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <form class="form-horizontal">
                   <div class="form-group">
-                      <label for="exampleInputFile" class="col-sm-2 control-label">Logo</label>
+                     
                       <div class="col-sm-10">
                         <input type="file" name="file" id="logoinputfile" onchange="angular.element(this).scope().addLogo('test',this.files)">
                       </div>
@@ -224,7 +202,7 @@
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.3.0
         </div>
-        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Khaanavali </a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Cinfo </a>.</strong> All rights reserved.
       </footer>
 
       <!-- Control Sidebar -->
