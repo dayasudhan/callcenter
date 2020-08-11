@@ -141,7 +141,7 @@ app.post('/login', function(req, res, next) {
             }
             else if(req.body.role == 'manager')
             {
-                redirect_url = '/p/manager_executive';
+                redirect_url = '/p/admin_order_today';
                 return res.redirect(redirect_url);
             }
             else if(req.body.role == 'executive')
@@ -182,12 +182,12 @@ app.post('/login', function(req, res, next) {
       }
        else if(req.body.role == 'vendor') 
        {
-        redirect_url = '/p/admin_order_today';
+        redirect_url = '/p/customer_details';
          return res.redirect(redirect_url);
        }
        else if(req.body.role == 'manager')
        {
-        redirect_url = '/p/manager_executive';
+        redirect_url = '/p/admin_order_today';
         return res.redirect(redirect_url);
        }
        else if(req.body.role == 'CSR')
