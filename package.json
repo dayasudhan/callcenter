@@ -15,7 +15,7 @@
     "express-session": "~1.0.0",
     "firebase": "^3.0.5",
     "method-override": "~1.0.0",
-    "mongoose": "~5.10.11",
+    "mongoose": "~5.7.5",
     "morgan": "~1.0.0",
     "passport": "~0.1.17",
     "passport-facebook": "~1.0.2",
