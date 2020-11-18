@@ -141,7 +141,7 @@ app.post('/login', function(req, res, next) {
             }
             else if(req.body.role == 'manager')
             {
-                redirect_url = '/p/admin_order_today';
+                redirect_url = '/p/leads';
                 return res.redirect(redirect_url);
             }
             else if(req.body.role == 'executive')
@@ -187,7 +187,7 @@ app.post('/login', function(req, res, next) {
        }
        else if(req.body.role == 'manager')
        {
-        redirect_url = '/p/admin_order_today';
+        redirect_url = '/p/leads';
         return res.redirect(redirect_url);
        }
        else if(req.body.role == 'CSR')
@@ -354,6 +354,9 @@ app.get('/p/executive_login', function (req, res) {
     res.render('executive_login', { user : req.user });
 });
 app.get('/p/manager_executive', function (req, res) {
+    console.log("/p/manager_executive 1");
+    console.log(req.user);
+    console.log("/p/manager_executive 2");
     res.render('manager_executive', { user : req.user });
 });
 app.get('/p/CSR_list', function (req, res) {
@@ -378,9 +381,9 @@ app.get('/p/admin_order/:id', function (req, res) {
     console.log(req.user);
     res.render('admin_order', { user : req.user, id:req.params.id});
 });
-app.get('/p/admin_order_today', function (req, res) {
+app.get('/p/leads', function (req, res) {
     console.log(req.user);
-    res.render('admin_order_today', { user : req.user });
+    res.render('leads', { user : req.user });
 });
 app.get('/p/load_xl', function (req, res) {
     console.log(req.user);
@@ -947,6 +950,45 @@ app.get( '/v1/grahak/infobyassigneduser/:id', function( request, response ) {
         }
     });
 });
+app.delete( '/v1/grahak/:id', function( request, response ) {
+      return GrahakModel.remove( { 'id':request.params.id},function( err ) {
+          if( !err ) {
+              console.log( 'customer record removed' );
+              return response.send( '' );
+          } else {
+              console.log( err );
+              return response.send('ERROR');
+          }
+      });
+  //});
+});
+
+app.post( '/v1/grahaklist', function( request, response ) {
+  console.log(request.body.list);
+ 
+  return GrahakModel.deleteMany( { 'id':{'$in':request.body.list}},function( err ) {
+      if( !err ) {
+          console.log( 'customer records removed' );
+          return response.send( '' );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+
+});
+app.delete( '/v1/grahakall', function( request, response ) {
+  return GrahakModel.deleteMany({},function( err ) {
+      if( !err ) {
+          console.log( 'customer all record removed' );
+          return response.send( '' );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+//});
+});
 app.get( '/v1/grahak/infobyid/:id', function( request, response ) {
     console.log("GET --/v1/school/info/");
 
@@ -969,7 +1011,7 @@ app.get( '/v1/grahak/infoall', function( request, response ) {
     return GrahakModel.find(function( err, vendor ) {
         console.log("GrahakModel.find");
         if( !err ) {
-            console.log(vendor);
+          //  console.log(vendor);
             return response.send( vendor );
         } else {
             console.log( err );

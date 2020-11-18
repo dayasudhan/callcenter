@@ -29,6 +29,7 @@ var uristring =
  
 // mongoose
 mongoose.connect(uristring,function (err, res) {
+  console.log("mongoose.connect");
   if (err) { 
     console.log ('ERROR connecting to: ' + uristring + '. ' + err);
   } else {

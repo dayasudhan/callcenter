@@ -1,9 +1,10 @@
 app = angular.module("adminModule", []);
+
   app.controller("adminController", function ($scope, $http, jsonFilter)
   {
 		   $scope.total2 = 123;
-		 
-  	      var config = {	    		  
+		   $scope.checkStatus = false; 
+		   var config = {	    		  
   	    		  headers: {
   	       		    'securekey': 'RN4CDXkqltLF%2FWloegKujIhiaSWBrgCzQXqI9cyWpT0',
   				    'client':'pickcock',
@@ -15,6 +16,7 @@ app = angular.module("adminModule", []);
 		var url = "/v1/executive/infoall";
 		//url = url + param;
 		$scope.executiveuserid = [];
+		$scope.deletelist = [];
 		$http.get(url,config)
 		  .success(function (data, status, headers, config)
 		  {
@@ -32,6 +34,65 @@ app = angular.module("adminModule", []);
 			$scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
 		  });
 		  console.log($scope.executiveuserid );
+	  }
+	  $scope.checkAll = function () {
+		 
+		  $scope.checkStatus = !$scope.checkStatus;
+		  console.log($scope.checkStatus);
+		  $scope.deletelist = new Array();
+		  if($scope.checkStatus)
+		  {
+	    	angular.forEach($scope.orderlist, function(item) {
+		     	$scope.deletelist.push(item.id);
+			});
+
+		}
+		// else{
+		// 	$scope.deletelist = new Array();
+		// }
+		console.log($scope.deletelist)
+	  }
+	  $scope.checkItem = function (param) {
+		console.log(param)
+		const isInArray = $scope.deletelist.includes(param);
+		console.log(isInArray); // true
+		//alert(isInArray);
+		if(isInArray)
+		{
+			const index = $scope.deletelist.indexOf(param);
+			console.log(isInArray); // true
+				if (index > -1) {
+					console.log(index); // true
+					$scope.deletelist.splice(index, 1);
+				}
+		}
+		else{
+			$scope.deletelist.push(param);
+		}
+		console.log($scope.deletelist)
+
+	  }
+
+
+	  $scope.DeleteButton = function () 
+	  {
+		
+		
+		var url = "/v1/grahaklist";
+		var postData={
+			list:$scope.deletelist
+		   };
+		   $http.post(url,postData)
+		   .success(function (data, status, headers, config)
+		   {
+			console.log("success list");
+			alert("Deletion Successfull")
+			location.reload()
+		   })
+		   .error(function (data, status, headers, config)
+		   {
+			console.log("error delete list");
+		   });
 	  }
   	  $scope.getOrders = function () {
       console.log("getLeads");
@@ -216,6 +277,102 @@ app = angular.module("adminModule", []);
 			 alert("addComment error");
 		  });
 	  };
+	  $scope.jsontoxlsheet= function (param) 	  {
+		// var data = [
+		// 	{ label: 'User', value: 'user' },
+		// 	{ label: 'Age', value: function x(row) { return (row.age + ' years') } },
+		// 	{ label: 'Phone', value: function x(row) { return (row.more ? row.more.phone || '' : '') } }
+		//   ]
+		// var results = [];
+		// var searchField = "name";
+		// var searchVal = "my Name";
+		// for (var i=0 ; i < obj.list.length ; i++)
+		// {
+		// 	if (obj.list[i][searchField] == searchVal) {
+		// 		results.push(obj.list[i]);
+		// 	}
+		// }
+		  var listlength = $scope.orderlist.length;
+		  var val= [];
+		for (var i=0 ; i < listlength ; i++)
+		{
+			
+			var  obj = {"Id":$scope.orderlist[i].id,
+						"Name":$scope.orderlist[i].name,
+						"Phone":$scope.orderlist[i].phone,
+						"CustomerStatus": $scope.orderlist[i].status,
+						"Alternatephone":$scope.orderlist[i].alternatephone,
+						"Income": $scope.orderlist[i].Income,
+						"DOB": $scope.orderlist[i].dob,
+						"OfficeEmail": $scope.orderlist[i].officeemail,
+						"CompanyName": $scope.orderlist[i].companyname,
+						"CompanyCategory": $scope.orderlist[i].companycategory,
+						"MeetingTime": $scope.orderlist[i].meetingtime,
+						"Address": $scope.orderlist[i].addresses,
+						"Tracker": $scope.orderlist[i].tracker
+					
+						
+					}
+						// personalemail: String,
+						// dob:String,
+						// salary:Number,
+						// status:String,
+						// assigneduser:String,
+						// income:String,
+						// tracker:[{status: String,time:String,reason:String,changedbyuserid:String}],
+						// addresses:[{label:String, 
+						// 	addressline:String,
+						// 	landMark:String
+						// 	 }],
+						// officeemail:String,
+						// companyname:String,
+						// companycategory:String,
+						// alternatephone:Number,
+						// doctocollect:[],
+						// otherrequirements:String	,
+						// customerstatus:String,
+						// meetingtime:String	
+			val.push(obj);
+
+}
+			console.log(val);
+	 	/* m:ake the worksheet */
+			 var ws = XLSX.utils.json_to_sheet(val);
+
+			/* add to workbook */
+			var wb = XLSX.utils.book_new();
+			XLSX.utils.book_append_sheet(wb, ws, "Leads");
+
+			/* generate an XLSX file */
+			XLSX.writeFile(wb, "LeadsList.xlsx");
+			// var content = [
+			// 	{ user: 'Ana', age: 16, more: { phone: '11111111' } },
+			// 	{ user: 'Luis', age: 19, more: { phone: '12345678' } },
+			// 	{ user: null, age: 21, more: { phone: '87654321' } }
+			//   ]
+			//   var settings = {
+			// 	sheetName: 'FirstSheet',
+			// 	fileName: 'MySpreadsheet'
+			//   }
+	
+			// let finalHeaders = ['colA', 'colB', 'colC'];
+			// let data1 = [
+			// 	[ { colA: 1, colB: 2, colC: 3 }, { colA: 4, colB: 5, colC: 6 }, { colA: 7, colB: 8, colC: 9 } ],
+			// 	[ { colA:11, colB:12, colC:13 }, { colA:14, colB:15, colC:16 }, { colA:17, colB:18, colC:19 } ],
+			// 	[ { colA:21, colB:22, colC:23 }, { colA:24, colB:25, colC:26 }, { colA:27, colB:28, colC:29 } ]
+			// ];
+				
+			// if(typeof XLSX == 'undefined') XLSX = require('xlsx');
+			
+			// data.forEach((array, i) => {
+			// 	console.log(XLSX.version);
+			// 	let ws = XLSX.utils.json_to_sheet(array, {header: finalHeaders});
+			// 	let wb = XLSX.utils.book_new()
+			// 	XLSX.utils.book_append_sheet(wb, ws, "SheetJS")
+			// 	let exportFileName = `workbook_${i}.xls`;
+			// 	XLSX.writeFile(wb, exportFileName)
+			// });
+	  }
 	  $scope.addLogo = function (param,files) {
 		console.log("addLogo");
 	
@@ -243,7 +400,7 @@ app = angular.module("adminModule", []);
 			workbook.SheetNames.forEach(function(sheetName) {
 			  // Here is your object
 			  console.log(sheetName);
-			  XLSX.shee
+			 // XLSX.shee
 			  var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 			//  var json_object = JSON.stringify(XL_row_object);
 			console.log(XL_row_object);
