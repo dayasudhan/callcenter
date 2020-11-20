@@ -273,7 +273,7 @@ app = angular.module("adminModule", []);
 	  $scope.openOrdersById = function (param) {
 		console.log("getOrdersById");
 	  
-		window.open("/p/admin_order/"+param, "_blank");
+		window.open("/p/customer_view/"+param, "_blank");
 	  };
 
   

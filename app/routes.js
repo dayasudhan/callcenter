@@ -2,22 +2,12 @@ var CustomerInfoModel = require('../app/models/customerInfo');
 var ExecutiveInfoModel = require('../app/models/executiveInfo');
 var GrahakModel = require('../app/models/grahak');
 var CountersModel = require('../app/models/counters');
-var OtpModel = require('../app/models/otp');
-var Firebase = require("firebase");
-var multer = require('multer');
-var path = require('path');
+
+
 var UserModel       = require('../app/models/user');
- //var sleep = require('sleep');
-// var Excel = require("exceljs");
-// var workbook = new Excel.Workbook();
-var Client = require('node-rest-client').Client;
-var client = new Client();
-var options = multer.diskStorage({ destination : 'public/images/logo/' ,
-  filename: function (req, file, cb) {
-    cb(null, req.params.id + path.extname(file.originalname));
-  }
-});
-var upload = multer({ storage: options });
+
+
+
 var securecustomerkey = 'EjR7tUPWx7WhsVs9FuVO6veFxFISIgIxhFZh6dM66rs';
 var securevendorkey = 'ORql2BHQq9ku8eUX2bGHjFmurqG84x2rkDQUNq9Peelw';
 var secureadminkey = 'tk0M6HKn0uzL%2FcWMnq3jkeF7Ao%2BtdWyYEJqPDl0P6Ac';
@@ -33,33 +23,6 @@ module.exports = function(app, passport) {
 
 
 
-// normal routes ===============================================================
-
-// show the home page (will also have our login links)
-app.get('/test', function(req, res) {
-    res.render('index.ejs');
-});
-
-// app.get('/', function (req, res) {
-//     if(req.isAuthenticated())
-//         res.render('customer', { user : req.user });
-//     else
-//         res.render('customer', { user : "dummy" });
-// });
-
-// app.get('/p/customer_menu', function (req, res) {
-//     if(req.isAuthenticated())
-//         res.render('customer_menu', { user : req.user });
-//     else
-//         res.render('customer_menu', { user : "dummy" });
-// });
-
-// PROFILE SECTION =========================
-app.get('/profile', isLoggedIn, function(req, res) {
-    res.render('profile.ejs', {
-        user : req.user
-    });
-});
 
 // LOGOUT ==============================
 app.get('/logout', function(req, res) {
@@ -167,42 +130,7 @@ app.post('/login', function(req, res, next) {
             res.render('customer_signup.ejs', { message: req.flash('signupMessage') });
         });
 
-    // facebook -------------------------------
-
-        // send to facebook to do the authentication
-        app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-
-        // handle the callback after facebook has authenticated the user
-        app.get('/auth/facebook/callback',
-            passport.authenticate('facebook', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
-
-    // twitter --------------------------------
-
-        // send to twitter to do the authentication
-        app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
-
-        // handle the callback after twitter has authenticated the user
-        app.get('/auth/twitter/callback',
-            passport.authenticate('twitter', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
-
-
-    // google ---------------------------------
-
-        // send to google to do the authentication
-        app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-
-        // the callback after google has authenticated the user
-        app.get('/auth/google/callback',
-            passport.authenticate('google', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
+    
 
 // =============================================================================
 // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
@@ -220,40 +148,7 @@ app.post('/login', function(req, res, next) {
 
     // facebook -------------------------------
 
-        // send to facebook to do the authentication
-        app.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
-
-        // handle the callback after facebook has authorized the user
-        app.get('/connect/facebook/callback',
-            passport.authorize('facebook', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
-
-    // twitter --------------------------------
-
-        // send to twitter to do the authentication
-        app.get('/connect/twitter', passport.authorize('twitter', { scope : 'email' }));
-
-        // handle the callback after twitter has authorized the user
-        app.get('/connect/twitter/callback',
-            passport.authorize('twitter', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
-
-
-    // google ---------------------------------
-
-        // send to google to do the authentication
-        app.get('/connect/google', passport.authorize('google', { scope : ['profile', 'email'] }));
-
-        // the callback after google has authorized the user
-        app.get('/connect/google/callback',
-            passport.authorize('google', {
-                successRedirect : '/profile',
-                failureRedirect : '/'
-            }));
+    
 
 // =============================================================================
 // UNLINK ACCOUNTS =============================================================
@@ -272,38 +167,10 @@ app.post('/login', function(req, res, next) {
         });
     });
 
-    // facebook -------------------------------
-    app.get('/unlink/facebook', isLoggedIn, function(req, res) {
-        var user            = req.user;
-        user.facebook.token = undefined;
-        user.save(function(err) {
-            res.redirect('/profile');
-        });
-    });
+   
 
-    // twitter --------------------------------
-    app.get('/unlink/twitter', isLoggedIn, function(req, res) {
-        var user           = req.user;
-        user.twitter.token = undefined;
-        user.save(function(err) {
-            res.redirect('/profile');
-        });
-    });
-
-    // google ---------------------------------
-    app.get('/unlink/google', isLoggedIn, function(req, res) {
-        var user          = req.user;
-        user.google.token = undefined;
-        user.save(function(err) {
-            res.redirect('/profile');
-        });
-    });
-
-app.get('/executive', function (req, res) {
-    res.render('executive_login', { user : req.user });
-});
 app.get('/', function (req, res) {
-    res.render('executive_login', { user : req.user });
+    res.render('login', { user : req.user });
 });
 //app.get('/find', function (req, res) {
 //    res.render('find', { user : req.user });
@@ -311,8 +178,8 @@ app.get('/', function (req, res) {
 
 
 
-app.get('/p/executive_login', function (req, res) {
-    res.render('executive_login', { user : req.user });
+app.get('/p/login', function (req, res) {
+    res.render('login', { user : req.user });
 });
 app.get('/p/addcsr', function (req, res) {
     console.log("/p/addcsr 1");
@@ -329,21 +196,11 @@ app.get('/p/CSR_list', function (req, res) {
 app.get('/p/addmanager', function(req, res) {
     res.render('addmanager',  { user : req.user });
 });
-app.get('/p/executive_details', function(req, res) {
-    res.render('executive_details', { user : req.user });
-});
 
-app.get('/about_us', function (req, res) {
-    res.render('about_us', { user : req.user });
-});
 
-app.get('/admin', function (req, res) {
-    res.render('admin_login', { user : req.user });
-});
-
-app.get('/p/admin_order/:id', function (req, res) {
+app.get('/p/customer_view/:id', function (req, res) {
     console.log(req.user);
-    res.render('admin_order', { user : req.user, id:req.params.id});
+    res.render('customer_view', { user : req.user, id:req.params.id});
 });
 app.get('/p/leads', function (req, res) {
     console.log(req.user);
@@ -363,23 +220,7 @@ app.get('/p/customer_list', function (req, res) {
     res.render('customer_list', { user : req.user });
 });
 
-app.get('/p/student_details', function (req, res) {
-    res.render('student_details', { user : req.user });
-});
 
-app.get('/p/student_attendence', function (req, res) {
-    res.render('student_attendence', { user : req.user });
-});
-app.get('/p/student_markssheet', function (req, res) {
-    res.render('student_markssheet', { user : req.user });
-});
-app.get('/p/vendor_login', function (req, res) {
-    res.render('vendor_login', { user : req.user });
-});
-
-app.get('/p/vendor_signup', function(req, res) {
-    res.render('vendor_signup', { });
-});
 app.post('/reset', function(req, res, next) {
 console.log(req.body);
   if(req.body.password != req.body.password2)
@@ -541,13 +382,9 @@ function registerExecutive(req, res, next) {
  
   console.log("VendorLogo post");
 //  console.log(req.body[0] );
-  
-  //console.log(req.body[1]);
- // var data = JSON.parse(req.body);
+
   var data = JSON.parse(JSON.stringify(req.body).replace(/\s(?=\w+":)/g, ""));
-  // console.log(data);
-//   console.log(data.length);
-//   console.log(data[0].MobNo);
+
   
   var i;
   
@@ -635,70 +472,8 @@ function savegrahkinfo(data,req,res)
 //       });
 //   // return res.send("done");
 // });
-app.get( '/v1/test/customer', function( req, res ) {
-                req.body.email = "dayasudhankggg@gmail.com";
-                req.body.phoneNumber = "9987";
-                req.body.name = "dayas";
-                  registerCustomer2(req, res,function(data)
-                  {
-                     return res.send(data);
-                  });
 
-});
 
-function registerCustomer2(req, res, next)
-{
-        console.log("/registerCustomer2");
-        var cus_id = "C";
-        var result = getNextSequence('customer',function(data) {
-
-          cus_id = cus_id + data.sequence;
-          console.log(cus_id);
-          console.log(req.body);
-          console.log(req.body.phoneNumber);
-          var phoneNumber = parseInt(req.body.phoneNumber);
-          console.log(phoneNumber);
-          return CustomerInfoModel.findOneAndUpdate({ 'phone':phoneNumber},
-            {
-                  $set:{email:req.body.email,
-                  name:req.body.name}
-            },
-            function( err,customer ) {
-                if( !err ) {
-                    if(customer == null)
-                    {
-                        console.log( "empty" );
-                        var customer = new CustomerInfoModel({
-                                  email:req.body.email,
-                                  id:cus_id,
-                                  phone:req.body.phoneNumber,
-                                  name:req.body.name
-                        });
-                     
-                        console.log(req.body);
-                        customer.save( function( err ) {
-                            if( !err ) {
-                                console.log( 'created' );
-                                next( customer );
-                            } else {
-                             console.log( 'error' );
-                                console.log( err );
-                                next(err);
-                            }
-                        });
-                    } 
-
-                    console.log("register2 ");
-                    console.log(customer);
-                    return  next(customer);
-            } else {
-                console.log( err );
-                return next('ERROR');
-            }
-        });
-
-  });
-};
 function getNextSequence(name,result)
 {
    
@@ -1090,38 +865,6 @@ var grahakInfo = new GrahakModel({
 }); 
 }
 
-// function registerVendor(req, res, next) {
-//     console.log("/registerVendor");
-//     console.log(req.body.email);
-//     var hotel_id = "R";
-//     var res = getNextSequence('manager',function(data) {
-  
-//       hotel_id = hotel_id + data.sequence;
-//       console.log(hotel_id);
-  
-//         var vendorInfo = new SchoolModel({
-//           username:req.body.email,
-//           id:hotel_id
-//         });
-//         vendorInfo.save( function( err ) {
-//           if( !err ) {
-//                 console.log( 'registerVendor created' );
-//                 console.log(req.body.email);
-//                     req.session.save(function (err) {
-//                       if (err) {
-//                           console.log( 'registerVendor save error' );
-//                         return next(err);
-//                       }
-//                       console.log( 'registerVendor save complete' );
-//                     });
-//                 return ;
-//                 } else {
-//                   console.log( 'registerVendor error' );
-//                   console.log( err );
-//                   return response.send('ERROR');
-//                 }
-//           });
-//       });
-//   };
+
 //module.exports = router;
 }
