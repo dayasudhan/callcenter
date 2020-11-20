@@ -314,11 +314,11 @@ app.get('/', function (req, res) {
 app.get('/p/executive_login', function (req, res) {
     res.render('executive_login', { user : req.user });
 });
-app.get('/p/manager_executive', function (req, res) {
-    console.log("/p/manager_executive 1");
+app.get('/p/addcsr', function (req, res) {
+    console.log("/p/addcsr 1");
     console.log(req.user);
-    console.log("/p/manager_executive 2");
-    res.render('manager_executive', { user : req.user });
+    console.log("/p/addcsr 2");
+    res.render('addcsr', { user : req.user });
 });
 app.get('/p/CSR_list', function (req, res) {
     res.render('CSR_list', { user : req.user });
@@ -326,8 +326,8 @@ app.get('/p/CSR_list', function (req, res) {
 // app.get('/p/executive_signup', function(req, res) {
 //     res.render('executive_signup', { });
 // });
-app.get('/p/manager_signup', function(req, res) {
-    res.render('manager_signup',  { user : req.user });
+app.get('/p/addmanager', function(req, res) {
+    res.render('addmanager',  { user : req.user });
 });
 app.get('/p/executive_details', function(req, res) {
     res.render('executive_details', { user : req.user });
