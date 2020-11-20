@@ -196,8 +196,10 @@ app = angular.module("adminModule", []);
     
   
 	  };
+	  
 	  $scope.addCSRDetails = function (param) {
 		console.log("addCSRDetails 1");
+		console.log(param);
 		// console.log($scope.csremail);
 		// console.log($scope.csrname);
 		// console.log($scope.csrphone);
@@ -215,7 +217,43 @@ app = angular.module("adminModule", []);
 		  userid:$scope.csremail,
 		  password:$scope.password,
 		  password2:$scope.password2,
-		  role:"CSR",
+		  role:param,
+		 };
+		$http.post(url,postData)
+		  .success(function (data, status, headers, config)
+		  {
+			  console.log("addCSRDetails success");
+			  //alert("CSR Added Successfully success");
+			  alert(data);
+  
+  
+		  })
+		  .error(function (data, status, headers, config)
+		  {
+			console.log(data);
+			 alert(data);
+		  });
+	  };
+	  $scope.addManagerDetails = function (param) {
+		console.log("addManagerDetails 1");
+		// console.log($scope.csremail);
+		// console.log($scope.csrname);
+		// console.log($scope.csrphone);
+		// console.log($scope.csrusername);
+		// console.log($scope.password);
+		// console.log($scope.password2);
+		// $scope.csrphone = "9876532202"
+		// $scope.csremail = "dayasudhan@gmail.com"
+	    var url = "/signup";
+		// url = url + param;
+		var postData={
+		  phone:$scope.csrphone,
+		  name:$scope.csrname,
+		  email:$scope.csrusername,
+		  userid:$scope.csremail,
+		  password:$scope.password,
+		  password2:$scope.password2,
+		  role:"manager",
 		 };
 		$http.post(url,postData)
 		  .success(function (data, status, headers, config)

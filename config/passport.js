@@ -46,8 +46,8 @@ module.exports = function(passport) {
         console.log("local-login 1");
         // asynchronous
         process.nextTick(function() {
-            console.log("local-login 2");
-            User.findOne({ 'local.email' :  email, 'local.role' :  req.body.role }, function(err, user) {
+            console.log("local-login 2");//, 'local.role' :  req.body.role
+            User.findOne({ 'local.email' :  email }, function(err, user) {
                 console.log("local-login 3");
                 console.log(user)
                 // if there are any errors, return the error

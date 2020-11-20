@@ -5,7 +5,8 @@ var ExecutiveInfoSchema = new mongoose.Schema({
 	phone:Number,
 	name:String,
 	email: String,
-	userid:String
+	userid:String,
+	role:String
     });
 
 //Model

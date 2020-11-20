@@ -6,6 +6,7 @@ var OtpModel = require('../app/models/otp');
 var Firebase = require("firebase");
 var multer = require('multer');
 var path = require('path');
+var UserModel       = require('../app/models/user');
  //var sleep = require('sleep');
 // var Excel = require("exceljs");
 // var workbook = new Excel.Workbook();
@@ -128,69 +129,29 @@ app.post('/login', function(req, res, next) {
     if (!user) {
         console.log("error in !user");
          var redirect_url = '/';
-            if(req.body.role == 'customer')
-            {
-                //redirect_url = '/signup';
-                console.log("error in login 1");
-                 return res.send("0"); 
-            }
-            else if(req.body.role == 'vendor') 
-            {
-                redirect_url = '/p/vendor_signup';
-                return res.redirect(redirect_url); 
-            }
-            else if(req.body.role == 'manager')
-            {
-                redirect_url = '/p/leads';
-                return res.redirect(redirect_url);
-            }
-            else if(req.body.role == 'executive')
-            {
-               
-                return res.send("Error in Login , user not registered");
-            }
-            else if(req.body.role == 'CSR')
-            {
-               
-                return res.send("Error in Login , user not registered");
-            }
-            
+        return res.send("Error in Login , user not registered");
+           
     }
     console.log("login start1");
     req.logIn(user, function(err) {
         console.log("login start2");
       if (err) { return next(err); }
       console.log(req.body.role);
+      console.log(user.local.role);
+    //   console.log(user.local);
       console.log("login");
       var redirect_url = '/';
-      if(req.body.role == 'customer')
-      {
-        //redirect_url = '/';
-
-           console.log("success in login 1");
-
-        // return CustomerInfoModel.find({ 'phone':req.body.email},function( err, customerInfo ) {
-        //     if( !err ) {
-        //         return res.send( customerInfo );
-        //     } else {
-        //         console.log( err );
-        //         return res.send('ERROR');
-        //     }
-        // });
- 
-        return res.send("1"); 
-      }
-       else if(req.body.role == 'vendor') 
-       {
-        redirect_url = '/p/customer_details';
-         return res.redirect(redirect_url);
-       }
-       else if(req.body.role == 'manager')
+       if(user.local.role == 'manager')
        {
         redirect_url = '/p/leads';
         return res.redirect(redirect_url);
        }
-       else if(req.body.role == 'CSR')
+       else if(user.local.role == 'admin')
+       {
+        redirect_url = '/p/leads';
+        return res.redirect(redirect_url);
+       }
+       else if(user.local.role == 'CSR')
        {
          redirect_url = '/p/customer_list';
          return res.redirect(redirect_url);
@@ -362,8 +323,11 @@ app.get('/p/manager_executive', function (req, res) {
 app.get('/p/CSR_list', function (req, res) {
     res.render('CSR_list', { user : req.user });
 });
-app.get('/p/executive_signup', function(req, res) {
-    res.render('executive_signup', { });
+// app.get('/p/executive_signup', function(req, res) {
+//     res.render('executive_signup', { });
+// });
+app.get('/p/manager_signup', function(req, res) {
+    res.render('manager_signup',  { user : req.user });
 });
 app.get('/p/executive_details', function(req, res) {
     res.render('executive_details', { user : req.user });
@@ -483,105 +447,47 @@ console.log(req.body);
       if (!user) { 
         console.log('/signup 5' );
           var redirect_url = '/';
-              if(req.body.role == 'customer')
-              {
-                  redirect_url = '/signup';
-                  return res.send("0");
-              }
-              else if(req.body.role == 'vendor') 
-              {
-                  redirect_url = '/p/vendor_signup';
-              } 
-              if(req.body.role == 'CSR')
-              {
-                //  redirect_url = '/p/executive_signup';
+        
                   return res.send("Error In registering the CSR");
-              }
-              return res.redirect(redirect_url); 
+           
        }
       req.logIn(user, function(err) {
         console.log('/signup 6' );
         if (err) { return next(err); }
         console.log(req.body.role);
         var redirect_url;
-        if(req.body.role == 'customer')
-        {
        
-          registerCustomer(req, res, function(data){
-            console.log("423")
-            console.log(data);
-           return  res.send(data);
-          });
-        }
-        else if(req.body.role == 'vendor') 
-        {
-          redirect_url = '/p/customer_details';
-          registerVendor(req, res, next);
-          return res.redirect(redirect_url);
-        }
-        else if(req.body.role == 'executive') 
-        {
-          redirect_url = '/p/executive_details';
-         // registerExecutive(req, res, next);
-          return res.redirect(redirect_url);
-        }
-        else if(req.body.role == 'CSR') 
+        if(req.body.role == 'CSR') 
         {
           //redirect_url = '/p/executive_details';
           registerExecutive(req, res, function()
           {
             res.send('Success');
           });
-          //return res.redirect(redirect_url);
         }
-        else
+        else if(req.body.role == 'manager')
         {
-        return res.redirect(redirect_url);
-      }
+          registerExecutive(req, res, function()
+          {
+            res.send('Success');
+          });
+        }
+        else if(req.body.role == 'admin')
+        {
+          registerExecutive(req, res, function()
+          {
+            res.send('Success');
+          });
+        }
+
       });
     })(req, res, next);
 });
-function registerCustomer(req, res, next) {
-  console.log("/registerCustomer");
-  var cus_id = "C";
-  var res = getNextSequence('customer',function(data) {
 
-    cus_id = cus_id + data.sequence;
-    console.log(cus_id);
-      var customerInfo = new CustomerInfoModel({
-        email:req.body.email2,
-        id:cus_id,
-        phone:req.body.email,
-        name:req.body.name
-      });
-
-      customerInfo.save( function( err ) {
-        if( !err ) {
-              console.log( 'registerCustomer created' );
-              console.log(req.body.email);
-                  req.session.save(function (err) {
-                    if (err) {
-                        console.log( 'registerCustomer save error' );
-                       next(err);
-                    }
-                    console.log( 'registerCustomer save complete' );
-                  });
-                  console.log( '463' );
-               next(customerInfo);
-              } else {
-                console.log( 'registerCustomer error' );
-                console.log( err );
-                return res.send('ERROR');
-              }
-        });
-    });
-};
+// };
 app.get( '/v1/executive/infoall', function( request, response ) {
     console.log("/v1/executive/infoall");
-  	if(checkVendorApiAunthaticated(request,0) == false)
-	{
-		return response.send("Not aunthiticated").status(403);
-	}
+  
     return ExecutiveInfoModel.find(function( err, order ) {
         if( !err ) {
             console.log("no error");
@@ -605,7 +511,8 @@ function registerExecutive(req, res, next) {
           id:cus_id,
           phone:req.body.phone,
           name:req.body.name,
-          userid:req.body.email
+          userid:req.body.email,
+          role:req.body.role
         });
   
         customerInfo.save( function( err ) {
@@ -1002,6 +909,23 @@ app.get( '/v1/grahak/infobyid/:id', function( request, response ) {
         }
     });
 });
+app.get( '/v1/User/infoall', function( request, response ) {
+    console.log("GET --/v1/school/info/all");
+   	// if(checkVendorApiAunthaticated(request,1) == false && request.isAuthenticated() == false)
+	// {
+	// 	return response.send("Not aunthiticated").status(403);
+	// }
+    return UserModel.find(function( err, vendor ) {
+        console.log("GrahakModel.find");
+        if( !err ) {
+          //  console.log(vendor);
+            return response.send( vendor );
+        } else {
+            console.log( err );
+            return response.send('ERROR');
+        }
+    });
+});
 app.get( '/v1/grahak/infoall', function( request, response ) {
     console.log("GET --/v1/school/info/all");
    	// if(checkVendorApiAunthaticated(request,1) == false && request.isAuthenticated() == false)
@@ -1163,41 +1087,41 @@ var grahakInfo = new GrahakModel({
             return response.send('ERROR');
           }
     });
-});
+}); 
 }
 
-function registerVendor(req, res, next) {
-    console.log("/registerVendor");
-    console.log(req.body.email);
-    var hotel_id = "R";
-    var res = getNextSequence('manager',function(data) {
+// function registerVendor(req, res, next) {
+//     console.log("/registerVendor");
+//     console.log(req.body.email);
+//     var hotel_id = "R";
+//     var res = getNextSequence('manager',function(data) {
   
-      hotel_id = hotel_id + data.sequence;
-      console.log(hotel_id);
+//       hotel_id = hotel_id + data.sequence;
+//       console.log(hotel_id);
   
-        var vendorInfo = new SchoolModel({
-          username:req.body.email,
-          id:hotel_id
-        });
-        vendorInfo.save( function( err ) {
-          if( !err ) {
-                console.log( 'registerVendor created' );
-                console.log(req.body.email);
-                    req.session.save(function (err) {
-                      if (err) {
-                          console.log( 'registerVendor save error' );
-                        return next(err);
-                      }
-                      console.log( 'registerVendor save complete' );
-                    });
-                return ;
-                } else {
-                  console.log( 'registerVendor error' );
-                  console.log( err );
-                  return response.send('ERROR');
-                }
-          });
-      });
-  };
+//         var vendorInfo = new SchoolModel({
+//           username:req.body.email,
+//           id:hotel_id
+//         });
+//         vendorInfo.save( function( err ) {
+//           if( !err ) {
+//                 console.log( 'registerVendor created' );
+//                 console.log(req.body.email);
+//                     req.session.save(function (err) {
+//                       if (err) {
+//                           console.log( 'registerVendor save error' );
+//                         return next(err);
+//                       }
+//                       console.log( 'registerVendor save complete' );
+//                     });
+//                 return ;
+//                 } else {
+//                   console.log( 'registerVendor error' );
+//                   console.log( err );
+//                   return response.send('ERROR');
+//                 }
+//           });
+//       });
+//   };
 //module.exports = router;
 }
