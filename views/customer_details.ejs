@@ -205,7 +205,7 @@
                         <div class="form-group">
                           <label for="inputEmail3"  class="col-sm-2 control-label">Date Of Birth</label>
                           <div class="col-sm-10">
-                            <input type="date" class="form-control"  name="Company Name"  placeholder={{Dateofbirth}} ng-model = "customer.dob" required>
+                            <input type="date" class="form-control"  name="Company Name"  placeholder={{Dateofbirth}} ng-model = "dob" required>
                           </div>
                          </div>
                          <div class="form-group">
@@ -224,7 +224,7 @@
                         <div class="form-group">
                           <label for="inputEmail3"  class="col-sm-2 control-label">Category</label>
                           <div class="col-sm-10">
-                              <select class="form-control select2" style="width: 100%;" ng-model = "customer.category" required>
+                              <select class="form-control select2" style="width: 100%;" ng-model = "customer.companycategory" required>
                                  <option>a</option>
                                 <option>b</option>
                                 <option>Others</option>
@@ -235,13 +235,13 @@
                          <div class="form-group">
                           <label for="inputEmail3" class="col-sm-2 control-label">Address</label>
                           <div class="col-sm-10">
-                            <textarea name="message" rows="4"  class="form-control"   autocomplete="off"  ng-model = "customer.address"></textarea>
+                            <textarea name="message" rows="4"  class="form-control"   autocomplete="off"  ng-model = "addressaddressline"></textarea>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="inputEmail3"name="Landmark" class="col-sm-2 control-label">Address Type</label>
                           <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" ng-model = "customer.addresslabel" required>
+                            <select class="form-control select2" style="width: 100%;" ng-model = "addresslabel" required>
                                <option selected>Office</option>
                                <option>Residence</option>
                        
@@ -251,7 +251,7 @@
                         <div class="form-group">
                           <label for="inputEmail3"name="Landmark" class="col-sm-2 control-label">Landmark</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control"  name="Landmark" placeholder="Landmark" ng-model = "customer.landmark">
+                            <input type="text" class="form-control"  name="Landmark" placeholder="Landmark" ng-model = "addresslandMark">
                           </div>
                         </div>
                         <div class="form-group">
@@ -287,7 +287,7 @@
                     <div class="form-group">
                       <label for="inputtime" class="col-sm-2 control-label">Date & Time to collect doc's</label>
                       <div class="col-sm-10">
-                        <input type="datetime-local" id="birthdaytime" style="width: 100%;" name="birthdaytime" ng-model = "customer.meetingtime">
+                        <input type="datetime-local" id="birthdaytime" style="width: 100%;" name="birthdaytime" ng-model = "meetingtime">
                       </div>
                     </div> 
                     <div class="form-group">

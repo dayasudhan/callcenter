@@ -180,6 +180,15 @@ app = angular.module("executiveModule", []);
            console.log($scope.customer.name);
            console.log($scope.customer.id);
            console.log($scope.customer.phone);
+           console.log($scope.customer.addresses[0]);
+           $scope.addresslabel = $scope.customer.addresses[0].label;
+           $scope.addresslandMark = $scope.customer.addresses[0].landMark;
+           $scope.addressaddressline = $scope.customer.addresses[0].addressline;
+           console.log($scope.addresslabel);
+           console.log($scope.addresslandMark);
+           console.log($scope.addressaddressline);
+           $scope.dob = new Date($scope.customer.dob);
+           $scope.meetingtime = new Date($scope.customer.meetingtime);
         //   angular.forEach($scope.orderlist, function(item) {
         //     var timestamp = item._id.toString().substring(0,8);
         //     item.date = new Date( parseInt( timestamp, 16 ) * 1000 );
@@ -194,10 +203,10 @@ app = angular.module("executiveModule", []);
             $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
           });
     };
-      $scope.changestatus = function(parama)
+      $scope.openItem = function(parama)
       {
         // alert(param2);
-         alert(parama);
+      //   alert(parama);
         $rootScope.id = parama;
         window.open("/p/customer_details/"+parama, "_blank");
       };
