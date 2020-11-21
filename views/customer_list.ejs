@@ -172,47 +172,29 @@
                     <thead>
                       <tr>
                         <th>Lead ID</th>
-                        <th>Customer Name</th>
-                        <th>Customer Phone</th>
-                        <th>Time</th>
-                        <th>Assignee</th>
-                        <!-- <th>Item Name</th>
-                        <th>Item Quantity</th>
-                        <th>HotelName</th>
-                        <th>HotelEmail</th>
-                        <th>Time</th>
-                        <th>Landmark</th>
-                        <th>Address</th> -->
-                        <th>Status</th>
-                        <th>Assign</th>
+                        <th>Name</th>
+                        <th>Lead status</th>
+                        <th>Company</th>
+                        <th>Phone</th>
+                        <th>Alternate Phone</th>
+                        <th>Personal Email</th>
+                        
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr ng-repeat="order in orderlist|orderBy:'date':true | filter:searchText">
                         <td>{{order.id}}</td>
                         <td>{{order.name}}</td>
+                        <td>{{order.customerstatus}}</td>
+                        <td>{{order.companyname}}</td>
                         <td>{{order.phone}}</td>
-                        <td>{{order.date | date:'medium'}}</td>
-                        <td>{{order.assigneduser}}</td>
-                        <!-- <td>{{order.menu[0].name}}</td>
-                        <td>{{order.menu[0].no_of_order}}</td>
-                        <td>{{order.hotel.name}}</td>
-                        <td>{{order.hotel.email}}</td>
-                        <td>{{order.date | date:'medium'}}</td>
-                        <td>{{order.customer.address.LandMark}}</td>
-                        <td>{{order.customer.address.areaName}}</td> -->
-                        <td>{{order.status}}</td> 
+                        <td>{{order.alternatephone}}</td> 
+                        <td>{{order.personalemail}}</td> 
                         <td class="tabcent">
-                          <!-- <form id='myform' method='POST' action='#'>
-                             
-                              <input type='text' name='userid' value='0' class='qty' />
-                              <input type='button' value='submit' class='qtyplus' field='quantity' />
-                          </form> -->
+                        
                           <form name="myForm">
-                           
-                            <!-- <select name="repeatSelect" id="repeatSelect" ng-model="data.changestatususerid">
-                              <option ng-repeat="option in executivelist" value="{{option.userid}}">{{option.userid}}</option>
-                            </select> -->
+                         
                              <button type="submit"  ng-click= "openItem(order.id)">Open</button>
                           </form>
                       </td>
@@ -222,19 +204,13 @@
                     <tfoot>
                       <tr>
                        <th>Lead ID</th>
-                        <th>Customer Name</th>
-                        <th>Customer Phone</th>
-                        <th>Time</th>
-                        <th>Assignee</th>
-                        <!-- <th>Item Name</th>
-                        <th>Item Quantity</th>
-                        <th>HotelName</th>
-                        <th>HotelEmail</th>
-                        <th>Time</th>
-                        <th>Landmark</th>
-                        <th>Address</th>  -->
-                        <th>Status</th>
-                        <th>Assign</th>                     
+                        <th>Name</th>   
+                        <th>Lead status</th>
+                        <th>Company</th>
+                        <th>Phone</th>
+                         <th>Alternate Phone</th>
+                         <th>Personal Email</th>
+                        <th></th>                     
                       </tr>
                     </tfoot>
                   </table>
