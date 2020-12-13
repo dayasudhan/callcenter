@@ -459,10 +459,12 @@ app = angular.module("adminModule", []);
 					$http.post(url,$scope.json_object).success(function (data, status, headers, config)
 					{
 						console.log("addxlsheet success");
+						window.alert("Excel sheet Added")
 					})
 					.error(function (data, status, headers, config)
 					{
 						console.log("addxlsheet error");
+						window.alert("add Excel sheet error")
 					});
 				//  return json_object;
 			  }

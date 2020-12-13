@@ -392,10 +392,10 @@ function registerExecutive(req, res, next) {
   for( i = 0; i< data.length ;i++)
   {
     savegrahkinfo(data[i],req,res);
-    console.log(i);
-    console.log(data[i].MobNo);
+   // console.log(i);
+   // console.log(data[i].MobNo);
   }
-  // return res.send('done');
+   return res.send('done');
 });
 function savegrahkinfo(data,req,res)
 {
