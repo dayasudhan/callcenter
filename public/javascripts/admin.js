@@ -145,7 +145,7 @@ app = angular.module("adminModule", []);
 	  };
 	$scope.changestatus = function(param,param2,param3)
 	{
-		 alert(param3);
+		 //alert(param3);
 		// alert(param.changestatususerid);
 		//$scope.changestatususerid = param.changestatususerid;
 		var url = "/v1/grahak/changestatus/";

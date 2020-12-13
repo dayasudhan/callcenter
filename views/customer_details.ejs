@@ -184,7 +184,7 @@
                         <div class="form-group">
                           <label for="inputEmail3"  class="col-sm-2 control-label">Status</label>
                           <div class="col-sm-10">
-                              <select class="form-control select2" style="width: 100%;" ng-model = "customer.customerstatus" required>
+                              <select class="form-control select2" style="width: 100%;" ng-model = "customer.customerstatus" required ng-change="myFunction()"> 
                                 <option>Busy/NR/OutofStaion/notpicking</option>
                                 <option>Interested</option>
                                 <option>Lead</option>
@@ -199,32 +199,38 @@
                         <div class="form-group">
                           <label for="inputEmail3"  class="col-sm-2 control-label">Alternate Phone No</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control"  name="Customer Phone" value=67 placeholder={{Phone}} ng-model = "customer.alternatephone" required>
+                            <input type="text" class="form-control"  id="alternatephone" name="Customer Phone" value=67 placeholder={{Phone}} ng-model = "customer.alternatephone" required>
                           </div>
                          </div>
                         <div class="form-group">
                           <label for="inputEmail3"  class="col-sm-2 control-label">Date Of Birth</label>
                           <div class="col-sm-10">
-                            <input type="date" class="form-control"  name="Company Name"  placeholder={{Dateofbirth}} ng-model = "dob" required>
+                            <input type="date" class="form-control"  id="dob" name="Company Name"  placeholder={{Dateofbirth}} ng-model = "customer.dob" required>
                           </div>
                          </div>
-                         <div class="form-group">
+                         <!-- <div class="form-group">
                           <label for="inputEmail3" name="latitude"  class="col-sm-2 control-label">Salary</label>
                           <div class="col-sm-10">
                             <input type="Number" class="form-control" name="salary" placeholder="salary" ng-model = "customer.salary" required>
+                          </div>
+                        </div> -->
+                        <div class="form-group">
+                          <label for="inputEmail3" name="latitude"  class="col-sm-2 control-label">Income</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="income" name="Income" placeholder="income" ng-model = "customer.income" required>
                           </div>
                         </div>
                         <div class="form-group">
                          <label for="inputEmail3"  class="col-sm-2 control-label">Company Name</label>
                          <div class="col-sm-10">
-                           <input type="text" class="form-control"  value="Company Name"  placeholder={{CompanyName}} ng-model = "customer.companyname" required>
+                           <input type="text" class="form-control"  id="companyname" value="Company Name"  placeholder={{CompanyName}} ng-model = "customer.companyname" required>
                          </div>
                         </div>
                        
                         <div class="form-group">
                           <label for="inputEmail3"  class="col-sm-2 control-label">Category</label>
                           <div class="col-sm-10">
-                              <select class="form-control select2" style="width: 100%;" ng-model = "customer.companycategory" required>
+                              <select class="form-control select2" style="width: 100%;" id="category"  ng-model = "customer.companycategory" required ng-change="myFunction2()">
                                  <option>a</option>
                                 <option>b</option>
                                 <option>Others</option>
@@ -235,13 +241,13 @@
                          <div class="form-group">
                           <label for="inputEmail3" class="col-sm-2 control-label">Address</label>
                           <div class="col-sm-10">
-                            <textarea name="message" rows="4"  class="form-control"   autocomplete="off"  ng-model = "addressaddressline"></textarea>
+                            <textarea name="message" rows="4"  id="address" class="form-control"   autocomplete="off"  ng-model = "customer.addressline"></textarea>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="inputEmail3"name="Landmark" class="col-sm-2 control-label">Address Type</label>
                           <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" ng-model = "addresslabel" required>
+                            <select class="form-control select2" id="addresstype" style="width: 100%;" ng-model = "customer.addresslabel" required>
                                <option selected>Office</option>
                                <option>Residence</option>
                        
@@ -251,25 +257,25 @@
                         <div class="form-group">
                           <label for="inputEmail3"name="Landmark" class="col-sm-2 control-label">Landmark</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control"  name="Landmark" placeholder="Landmark" ng-model = "addresslandMark">
+                            <input type="text" class="form-control"  id="landmark" name="Landmark" placeholder="Landmark" ng-model = "customer.landmark">
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="inputEmail3"  class="col-sm-2 control-label">Official Email Id</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control"  name="Emails"   ng-model = "customer.officeemail" required>
+                            <input type="text" class="form-control"  id="officialemail" name="Emails"   ng-model = "customer.officeemail" required>
                           </div>
                          </div>
                          <div class="form-group">
                           <label for="inputEmail3"  class="col-sm-2 control-label">Personal Email Id</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control"  name="Emails"   ng-model = "customer.personalemail" required>
+                            <input type="text" class="form-control"  id="personalemail" name="Emails"   ng-model = "customer.personalemail" required>
                           </div>
                          </div>
                          <div class="form-group">
                           <label for="inputEmail3"  class="col-sm-2 control-label">Documents to collect</label>
                           <div class="col-sm-10">
-                              <select class="form-control select2" style="width: 100%;" multiple  ng-model = "customer.doctocollect " required>
+                              <select class="form-control select2" id="doctocollect" style="width: 100%;" multiple  ng-model = "customer.doctocollect " required>
                                 <option>Aadhar</option>
                                 <option>Driving Licence</option>
                                 <option>Passport</option>
@@ -287,13 +293,13 @@
                     <div class="form-group">
                       <label for="inputtime" class="col-sm-2 control-label">Date & Time to collect doc's</label>
                       <div class="col-sm-10">
-                        <input type="datetime-local" id="birthdaytime" style="width: 100%;" name="birthdaytime" ng-model = "meetingtime">
+                        <input type="datetime-local"  id="dateandtimetopickup" style="width: 100%;" name="birthdaytime" ng-model = "customer.meetingtime">
                       </div>
                     </div> 
                     <div class="form-group">
                       <label for="inputEmail3" class="col-sm-2 control-label">Other Requirements</label>
                       <div class="col-sm-10">
-                        <textarea name="message" rows="4"  class="form-control"   autocomplete="off"  ng-model = "customer.otherrequirements"></textarea>
+                        <textarea name="message" rows="4"  class="form-control" id="otherrequirements"  autocomplete="off"  ng-model = "customer.otherrequirements"></textarea>
                       </div>
                     </div>
                    

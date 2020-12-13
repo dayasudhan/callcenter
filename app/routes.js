@@ -399,7 +399,7 @@ function registerExecutive(req, res, next) {
 });
 function savegrahkinfo(data,req,res)
 {
-    console.log(data.CusName);
+    console.log(data);
     var taskid = "T";
     var indiantime = new Date();
     indiantime.setHours(indiantime.getHours() + 5);
@@ -411,9 +411,10 @@ function savegrahkinfo(data,req,res)
         name:data.CusName ,
         assigneduser:"Manager",
         id:ntaskid,
-        status:data.status,
+        customerstatus:data.status,
+        companyname:data.company,
         income:data.Income,
-        tracker:  [{status:data.status,time:indiantime,reason:data.Remark}]  ,
+        tracker:  [{status:"created",time:indiantime,reason:""}]  ,
       });
       grahakInfo.save( function( err ) {
         if( !err ) {
@@ -693,7 +694,7 @@ app.get( '/v1/User/infoall', function( request, response ) {
     return UserModel.find(function( err, vendor ) {
         console.log("GrahakModel.find");
         if( !err ) {
-          //  console.log(vendor);
+            console.log(vendor);
             return response.send( vendor );
         } else {
             console.log( err );
@@ -757,7 +758,7 @@ app.post( '/v1/grahak/info2/:id', function( request, response ) {
       console.log("storegrahakInfo post");
       console.log(request.body);
       var address = {label:request.body.addresslabel, 
-      addressline:request.body.address,
+      addressline:request.body.addressline,
       landMark:request.body.landmark};
       console.log(address);
 
@@ -779,7 +780,7 @@ var mtime = new Date(request.body.meetingtime);
           addresses:address,
           officeemail:request.body.officeemail,
           companyname:request.body.companyname,
-          companycategory:request.body.category,
+          companycategory:request.body.companycategory,
           alternatephone:request.body.alternatephone,
           doctocollect:request.body.doctocollect,
           otherrequirements:request.body.otherrequirements,
