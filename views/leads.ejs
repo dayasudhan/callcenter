@@ -177,15 +177,8 @@
                         <th>Customer Phone</th>
                         <th>Time</th>
                         <th>Assignee</th>
-                        <!-- <th>Item Name</th>
-                        <th>Item Quantity</th>
-                        <th>HotelName</th>
-                        <th>HotelEmail</th>
-                        <th>Time</th>
-                        <th>Landmark</th>
-                        <th>Address</th> -->
-                        <th>Status</th>
-                        <th>Assign</th>
+                        <!-- <th>Status</th>
+                        <th>Assign</th> -->
                         <th>View</th>
                         
                       </tr>
@@ -202,21 +195,21 @@
                         <td>{{order.phone}}</td>
                         <td>{{order.date | date:'medium'}}</td>
                         <td>{{order.assigneduser}}</td>
-                        <td>{{order.status}}</td> 
-                        <td class="tabcent">
+                        <!-- <td>{{order.status}}</td>  -->
+                        
                           <!-- <form id='myform' method='POST' action='#'>
                              
                               <input type='text' name='userid' value='0' class='qty' />
                               <input type='button' value='submit' class='qtyplus' field='quantity' />
                           </form> -->
-                          <form name="myForm">
+                          <!-- <form name="myForm">
                            
                             <select name="repeatSelect" id="repeatSelect" ng-model="data.changestatususerid">
                               <option ng-repeat="option in executivelist" value="{{option.userid}}">{{option.userid}}</option>
                             </select>
                             <button type="submit" ng-click= "changestatus(data,order.id,'<%= user.local.email %>')">Assign</button>
-                          </form>
-                        </td>
+                          </form> -->
+                        
                           <td class="tabcent">
                           <form name="myForm">
                             <button type="submit" ng-click= "openOrdersById(order.id)">View</button>
@@ -237,8 +230,8 @@
                         <th>Customer Phone</th>
                         <th>Time</th>
                         <th>Assignee</th>
-                        <th>Status</th>
-                        <th>Assign</th>   
+                        <!-- <th>Status</th>
+                        <th>Assign</th>    -->
                         <th>View</th>  
                                       
                       </tr>
@@ -248,6 +241,16 @@
                     </form>
                     <form name="myForm">
                       <button type="submit" ng-click= "jsontoxlsheet()">Download</button>
+                    </form>
+                    <!-- <form name="myForm">
+                      <button type="submit" ng-click= "AssignButton()">Assign</button>
+                    </form> -->
+                    <form name="myForm">
+                           
+                      <select name="repeatSelect" id="repeatSelect" ng-model="data.changestatususerid">
+                        <option ng-repeat="option in executivelist" value="{{option.userid}}">{{option.userid}}</option>
+                      </select>
+                      <button type="submit" ng-click= "changestatus(data,order.id,'<%= user.local.email %>')">Assign</button>
                     </form>
                   </table>
                 </div><!-- /.box-body -->

@@ -753,6 +753,31 @@ app.post( '/v1/grahak/changestatus/:id', function( request, response ) {
       }
   });
       });
+
+      app.post( '/v1/grahaklist2/changestatus', function( request, response ) {
+        console.log(request.body);
+        var indiantime =  new Date();
+        var date = indiantime.toDateString(); 
+     var time = indiantime.toLocaleTimeString(); 
+     var status_time  =  date + " " + time;
+        return GrahakModel.updateMany( { 'id':{'$in':request.body.list}},
+        { 
+          assigneduser:request.body.userid,
+          status:request.body.status,
+          $addToSet: {tracker: {$each:[{status: request.body.status,  
+              time:status_time,
+              changedbyuserid:request.body.changedbyuserid,
+              reason:request.body.reason}] }}
+        },function( err ) {
+            if( !err ) {
+                console.log( 'customer records removed' );
+                return response.send( '' );
+            } else {
+                console.log( err );
+                return response.send('ERROR');
+            }
+        });
+      });
 app.post( '/v1/grahak/info2/:id', function( request, response ) {
 
       console.log("storegrahakInfo post");

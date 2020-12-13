@@ -148,9 +148,10 @@ app = angular.module("adminModule", []);
 		 //alert(param3);
 		// alert(param.changestatususerid);
 		//$scope.changestatususerid = param.changestatususerid;
-		var url = "/v1/grahak/changestatus/";
-		 url = url + param2;
+		var url = "/v1/grahaklist2/changestatus";
+		// url = url + param2;
 		 var postData={
+			list:$scope.deletelist,
 			status:"Assigned",
 			userid:param.changestatususerid,
 			changedbyuserid:param3,
@@ -468,7 +469,7 @@ app = angular.module("adminModule", []);
 					});
 				//  return json_object;
 			  }
-			  //console.log(jsonarray1[0]);
+			  //console.log(jsonarray1[0]);git commit -m "alert after exlce sheet add"
 			})
 	  
 		  };
