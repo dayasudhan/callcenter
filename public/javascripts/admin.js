@@ -1,6 +1,6 @@
 app = angular.module("adminModule", []);
 
-  app.controller("adminController", function ($scope, $http, jsonFilter)
+  app.controller("adminController", function ($scope, $http, $filter,jsonFilter)
   {
 		   $scope.total2 = 123;
 		   $scope.checkStatus = false; 
@@ -11,6 +11,7 @@ app = angular.module("adminModule", []);
   				    'version':'1'
   				  }
 			};
+			
 	  $scope.init = function()
 	  {
 		var url = "/v1/executive/infoall";
@@ -110,8 +111,8 @@ app = angular.module("adminModule", []);
           var timestamp = item._id.toString().substring(0,8);
           item.date = new Date( parseInt( timestamp, 16 ) * 1000 );
         //  item.date.setTimezone("Asia/kolkata");
-          console.log(item._id);
-         console.log(item.date);
+         // console.log(item._id);
+        // console.log(item.date);
         });
        console.log("timestamp 2");
         })
@@ -120,6 +121,27 @@ app = angular.module("adminModule", []);
           $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
         });
 	};
+	//$filter('filter')(array, expression, comparator, anyPropertyKey)
+	$scope.searchText = "";
+	$scope.filteredlist2 =function(){
+		return $scope.orderlist;
+	}
+//	$filter('filter')(employees, {name:"Joe"});
+	$scope.filteredlist = $filter('filter')(function()
+	{
+		alert("filteredlist");
+		console.log("filteredlist");
+		return $scope.orderlist;
+	});
+	$scope.filteredPeople = $filter('filter')($scope.orderlist, function(person){
+		console.log("filteredPeople");
+		return /^ffff.*/g.test(person.assigneduser);
+	});
+	$scope.filterEmployees = $filter('filter')($scope.orderlist ,'T');
+	// 	,function(order){
+	// 	//return /^Jo.*/g.test(order.details.name);
+	// 	return /^Jo.*/g.test(order.details.name);
+	// });
 	$scope.getOrdersById = function (param) {
 		console.log("getOrdersById");
 	  

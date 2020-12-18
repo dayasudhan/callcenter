@@ -22,7 +22,8 @@ var GrahakInfoSchema = new mongoose.Schema({
 	doctocollect:[],
 	otherrequirements:String	,
 	customerstatus:String,
-	meetingtime:String	
+	meetingtime:String	,
+	statusnote:String
     });
 
 //Model

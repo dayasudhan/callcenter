@@ -184,7 +184,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="order in orderlist|orderBy:'date':true | filter:searchText">
+                      <!-- <tr ng-repeat="order in filteredlist"> -->
+                      <tr ng-repeat="order in orderlist|orderBy:'date':true | filter:searchText"  >
                         <td class="tabcent">
                           <form name="myForm">
                             <input type="checkbox" ng-model="confirmed2" ng-checked="selectAll" ng-change="checkItem(order.id)">

@@ -719,6 +719,28 @@ app.get( '/v1/grahak/infoall', function( request, response ) {
         }
     });
 });
+
+app.post( '/v1/grahak/changecustomerstatus/:id', function( request, response ) {
+  console.log("/v1/grahak/changecustomerstatus");
+  console.log(request.body);
+  console.log(request.params.id);
+  return GrahakModel.findOneAndUpdate({ 'id':request.params.id},
+  { 
+      statusnote:request.body.statusnote,
+      customerstatus:request.body.customerstatus
+      
+    },
+      function( err, order ) {
+    if( !err ) {
+        console.log("no error");
+        
+        return response.send("success");
+    } else {
+        console.log( err );
+        return response.send('ERROR');
+    }
+});
+    });
 app.post( '/v1/grahak/changestatus/:id', function( request, response ) {
     // if(checkVendorApiAunthaticated(req,1) == false && req.isAuthenticated() == false)
     // {
@@ -810,7 +832,8 @@ var mtime = new Date(request.body.meetingtime);
           doctocollect:request.body.doctocollect,
           otherrequirements:request.body.otherrequirements,
           customerstatus:request.body.customerstatus,
-          meetingtime:meeting_time
+          meetingtime:meeting_time,
+          statusnote:request.body.statusnote
         //  $addToSet: {tracker: {$each:[{status: request.body.status,  time:indiantime,reason:request.body.reason}] }}
         },
           function( err, order ) {

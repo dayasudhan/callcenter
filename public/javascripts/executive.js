@@ -43,7 +43,7 @@ app = angular.module("executiveModule", []);
   {
     //window.alert($scope.customer.customerstatus);
     console.log($scope.customer.customerstatus)
-    if($scope.customer.customerstatus == "Lead")
+    if($scope.customer.customerstatus == "Lead" || $scope.customer.customerstatus == "Lead Yet to Confirm")
     {
       console.log($scope.customer.customerstatus)
       document.getElementById("alternatephone").disabled = false;
@@ -78,6 +78,35 @@ app = angular.module("executiveModule", []);
     
     }
   }
+  
+  $scope.changecustomerstatus = function (param) {
+    var url = "/v1/grahak/changecustomerstatus/";
+    url = url + param;
+    console.log($scope.customerstatus1);
+    console.log($scope.statusnote1);
+    var postData={customerstatus : $scope.customerstatus1,
+                  statusnote: $scope.statusnote1
+    }
+   
+    var postData1={customerstatus : "Lead",
+      statusnote: "$scope.statusnote1"
+}
+
+    $http.post(url,postData1)
+      .success(function (data, status, headers, config)
+      {
+        console.log("changecustomerstatus success");
+        alert("changecustomerstatus success");
+        //close();
+      })
+      .error(function (data, status, headers, config)
+      {
+        console.log("changecustomerstatus error");
+        alert("changecustomerstatus error");
+        //close();
+      });
+
+};
       $scope.addCustomerDetails = function (param) {
         console.log("addCustomerDetails 1");
         console.log(param);
@@ -91,7 +120,7 @@ app = angular.module("executiveModule", []);
         else if ($scope.customer.customerstatus == "" || $scope.customer.customerstatus == null ) {
           window.alert("Customer Status  Empty");
         }
-        else if($scope.customer.customerstatus == "Lead")
+        else if($scope.customer.customerstatus == "Lead" || $scope.customer.customerstatus == "Lead Yet to Confirm")
         {
           if ($scope.customer.alternatephone == "" || $scope.customer.alternatephone == null) {
             window.alert("Invalid Alternate Phone Number");
@@ -143,7 +172,7 @@ app = angular.module("executiveModule", []);
           else if ($scope.customer.otherrequirements == "" || $scope.customer.otherrequirements == null ) {
             window.alert("Other Requirements Empty");
           }
-      
+        }
             var url = "/v1/grahak/info2/param";
             // url = url + param;
             var postData=$scope.customer;
@@ -154,13 +183,15 @@ app = angular.module("executiveModule", []);
               {
                 console.log("addExecutiveDetails success");
                 alert("addExecutiveDetails success");
+                close();
               })
               .error(function (data, status, headers, config)
               {
                 console.log("addExecutiveDetails error");
                 alert("addExecutiveDetails error");
+                close();
               });
-        }
+        
         };
         $scope.getOrders = function () {
           console.log("getLeads");

@@ -174,11 +174,12 @@
                         <th>Lead ID</th>
                         <th>Name</th>
                         <th>Lead status</th>
-                        <th>Company</th>
+                        <!-- <th>Company</th> -->
                         <th>Phone</th>
                         <th>Alternate Phone</th>
-                        <th>Personal Email</th>
-                        
+                        <!-- <th>Personal Email</th> -->
+                        <th>Status</th>
+                        <th>Status Note</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -187,10 +188,36 @@
                         <td>{{order.id}}</td>
                         <td>{{order.name}}</td>
                         <td>{{order.customerstatus}}</td>
-                        <td>{{order.companyname}}</td>
+                        <!-- <td>{{order.companyname}}</td> -->
                         <td>{{order.phone}}</td>
                         <td>{{order.alternatephone}}</td> 
-                        <td>{{order.personalemail}}</td> 
+                        <!-- <td>{{order.personalemail}}</td>  -->
+                        <td>
+                          <div class="col-sm-10">
+                            <select class="form-control select2" style="width: 100%;" ng-model = "customerstatus1" required > 
+                              <option>Busy/NR/OutofStaion/notpicking</option>
+                              <option>Interested</option>
+                              <option>Lead</option>
+                              <option>Lead Yet to Confirm</option>
+                              <option>Not Interested</option>
+                              <option>Not Eligible</option>
+                              <option>Existing Customer</option>
+                              <option>Others</option>
+                            </select>
+                        </div>
+                        </td>
+                        <td>
+                        <form name="myForm"></form>
+                        <input type="text" class="form-control"  name="statusnote"  placeholder={{statusnote1}} ng-model = "statusnote1" >
+                        </form>
+                      </td>
+                      <td class="tabcent">
+                        
+                        <form name="myForm">
+                       
+                           <button type="submit"  ng-click= "changecustomerstatus(order.id)">Submit</button>
+                        </form>
+                    </td>
                         <td class="tabcent">
                         
                           <form name="myForm">
@@ -206,10 +233,12 @@
                        <th>Lead ID</th>
                         <th>Name</th>   
                         <th>Lead status</th>
-                        <th>Company</th>
+                        <!-- <th>Company</th> -->
                         <th>Phone</th>
                          <th>Alternate Phone</th>
-                         <th>Personal Email</th>
+                         <!-- <th>Personal Email</th> -->
+                         <th>Status</th>
+                        <th>Status Note</th>
                         <th></th>                     
                       </tr>
                     </tfoot>
