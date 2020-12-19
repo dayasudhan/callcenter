@@ -297,6 +297,7 @@ var url = "/v1/grahak/changecustomerstatus/";
         //    console.log(item.date);
         //   });
         //  console.log("timestamp 2");
+        $scope.myFunction();
           })
           .error(function (data, status, headers, config)
           {
