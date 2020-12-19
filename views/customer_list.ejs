@@ -184,7 +184,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="order in orderlist|orderBy:'date':true | filter:searchText">
+                      <tr ng-repeat="order in orderlist | filter:searchText">
                         <td>{{order.id}}</td>
                         <td>{{order.name}}</td>
                         <td>{{order.customerstatus}}</td>
@@ -194,7 +194,7 @@
                         <!-- <td>{{order.personalemail}}</td>  -->
                         <td>
                           <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" ng-model = "customerstatus1" required > 
+                            <select class="form-control select2" style="width: 100%;" ng-model = "orderlist[$index].customerstatus" required ng-change="myFunctionlist($index)"> 
                               <option>Busy/NR/OutofStaion/notpicking</option>
                               <option>Interested</option>
                               <option>Lead</option>
@@ -208,14 +208,14 @@
                         </td>
                         <td>
                         <form name="myForm"></form>
-                        <input type="text" class="form-control"  name="statusnote"  placeholder={{statusnote1}} ng-model = "statusnote1" >
+                        <input type="text" class="form-control"  name="statusnote"  placeholder={{order.statusnote}} ng-model ="orderlist[$index].statusnote">
                         </form>
                       </td>
                       <td class="tabcent">
                         
                         <form name="myForm">
                        
-                           <button type="submit"  ng-click= "changecustomerstatus(order.id)">Submit</button>
+                           <button type="submit"  ng-click= "changecustomerstatus($index)">Submit</button>
                         </form>
                     </td>
                         <td class="tabcent">

@@ -39,6 +39,10 @@ app = angular.module("executiveModule", []);
   {
     console.log($scope.customer.companycategory)
   }
+  $scope.myFunctionlist = function(param)
+  {
+    console.log($scope.orderlist[param].customerstatus)
+  }
   $scope.myFunction = function()
   {
     //window.alert($scope.customer.customerstatus);
@@ -80,19 +84,19 @@ app = angular.module("executiveModule", []);
   }
   
   $scope.changecustomerstatus = function (param) {
-    var url = "/v1/grahak/changecustomerstatus/";
-    url = url + param;
-    console.log($scope.customerstatus1);
-    console.log($scope.statusnote1);
-    var postData={customerstatus : $scope.customerstatus1,
-                  statusnote: $scope.statusnote1
-    }
+    
+    // console.log($scope.customerstatus1);
+    // console.log($scope.statusnote);
+    // console.log($scope.orderlist[0].statusnote);
+    var postData={customerstatus : $scope.orderlist[param].customerstatus,
+                  statusnote: $scope.orderlist[param].statusnote}
+    // console.log($scope.orderlist[param].statusnote);
+    // console.log($scope.orderlist[param].id);
+    // console.log($scope.orderlist[param].customerstatus);
    
-    var postData1={customerstatus : "Lead",
-      statusnote: "$scope.statusnote1"
-}
-
-    $http.post(url,postData1)
+var url = "/v1/grahak/changecustomerstatus/";
+    url = url + $scope.orderlist[param].id;
+    $http.post(url,postData)
       .success(function (data, status, headers, config)
       {
         console.log("changecustomerstatus success");
@@ -225,13 +229,17 @@ app = angular.module("executiveModule", []);
      console.log("getLeads 2");
         var url = "/v1/grahak/infobyassigneduser/";
         url = url + param;
+        $scope.customerstatus1="";
+        $scope.statusnote1 = "";
+        console.log($scope.customerstatus1);
+        console.log($scope.statusnote1);
         console.log(url);
         $http.get(url,config)
           .success(function (data, status, headers, config)
           {
             $scope.orderlist = data;
             $scope.total2 = data.length;
-  
+            console.log($scope.orderlist);
           angular.forEach($scope.orderlist, function(item) {
             var timestamp = item._id.toString().substring(0,8);
             item.date = new Date( parseInt( timestamp, 16 ) * 1000 );
