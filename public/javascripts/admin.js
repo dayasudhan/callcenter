@@ -339,26 +339,17 @@ app = angular.module("adminModule", []);
 		  });
 	  };
 	  $scope.jsontoxlsheet= function (param) 	  {
-		// var data = [
-		// 	{ label: 'User', value: 'user' },
-		// 	{ label: 'Age', value: function x(row) { return (row.age + ' years') } },
-		// 	{ label: 'Phone', value: function x(row) { return (row.more ? row.more.phone || '' : '') } }
-		//   ]
-		// var results = [];
-		// var searchField = "name";
-		// var searchVal = "my Name";
-		// for (var i=0 ; i < obj.list.length ; i++)
-		// {
-		// 	if (obj.list[i][searchField] == searchVal) {
-		// 		results.push(obj.list[i]);
-		// 	}
-		// }
+		//$scope.deletelist
 		  var listlength = $scope.orderlist.length;
 		  var val= [];
 		for (var i=0 ; i < listlength ; i++)
 		{
-			
-			var  obj = {"Id":$scope.orderlist[i].id,
+			//console.log($scope.deletelist.includes($scope.orderlist[i].id));
+			if($scope.deletelist.includes($scope.orderlist[i].id))
+			{
+				console.log($scope.orderlist[i].id);
+
+				var  obj = {"Id":$scope.orderlist[i].id,
 						"Name":$scope.orderlist[i].name,
 						"Phone":$scope.orderlist[i].phone,
 						"CustomerStatus": $scope.orderlist[i].status,
@@ -371,31 +362,10 @@ app = angular.module("adminModule", []);
 						"MeetingTime": $scope.orderlist[i].meetingtime,
 						"Address": $scope.orderlist[i].addresses,
 						"Tracker": $scope.orderlist[i].tracker
-					
-						
 					}
-						// personalemail: String,
-						// dob:String,
-						// salary:Number,
-						// status:String,
-						// assigneduser:String,
-						// income:String,
-						// tracker:[{status: String,time:String,reason:String,changedbyuserid:String}],
-						// addresses:[{label:String, 
-						// 	addressline:String,
-						// 	landMark:String
-						// 	 }],
-						// officeemail:String,
-						// companyname:String,
-						// companycategory:String,
-						// alternatephone:Number,
-						// doctocollect:[],
-						// otherrequirements:String	,
-						// customerstatus:String,
-						// meetingtime:String	
-			val.push(obj);
-
-}
+					val.push(obj);
+				}
+		}
 			console.log(val);
 	 	/* m:ake the worksheet */
 			 var ws = XLSX.utils.json_to_sheet(val);
@@ -406,33 +376,7 @@ app = angular.module("adminModule", []);
 
 			/* generate an XLSX file */
 			XLSX.writeFile(wb, "LeadsList.xlsx");
-			// var content = [
-			// 	{ user: 'Ana', age: 16, more: { phone: '11111111' } },
-			// 	{ user: 'Luis', age: 19, more: { phone: '12345678' } },
-			// 	{ user: null, age: 21, more: { phone: '87654321' } }
-			//   ]
-			//   var settings = {
-			// 	sheetName: 'FirstSheet',
-			// 	fileName: 'MySpreadsheet'
-			//   }
-	
-			// let finalHeaders = ['colA', 'colB', 'colC'];
-			// let data1 = [
-			// 	[ { colA: 1, colB: 2, colC: 3 }, { colA: 4, colB: 5, colC: 6 }, { colA: 7, colB: 8, colC: 9 } ],
-			// 	[ { colA:11, colB:12, colC:13 }, { colA:14, colB:15, colC:16 }, { colA:17, colB:18, colC:19 } ],
-			// 	[ { colA:21, colB:22, colC:23 }, { colA:24, colB:25, colC:26 }, { colA:27, colB:28, colC:29 } ]
-			// ];
-				
-			// if(typeof XLSX == 'undefined') XLSX = require('xlsx');
 			
-			// data.forEach((array, i) => {
-			// 	console.log(XLSX.version);
-			// 	let ws = XLSX.utils.json_to_sheet(array, {header: finalHeaders});
-			// 	let wb = XLSX.utils.book_new()
-			// 	XLSX.utils.book_append_sheet(wb, ws, "SheetJS")
-			// 	let exportFileName = `workbook_${i}.xls`;
-			// 	XLSX.writeFile(wb, exportFileName)
-			// });
 	  }
 	  $scope.addLogo = function (param,files) {
 		console.log("addLogo");
