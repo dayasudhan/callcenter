@@ -4,7 +4,7 @@
 // get all the tools we need
 var express  = require('express');
 var app      = express();
-var port     = process.env.PORT || 3000;
+var port     = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 //mongoose.connect(configDB.url); // connect to our database
 var uristring = 
   process.env.ATLAS_URISTRING ||
-  'mongodb://localhost/callcenter33';
+  'mongodb://localhost/callcenter1';
  
 // mongoose
 mongoose.connect(uristring,function (err, res) {
